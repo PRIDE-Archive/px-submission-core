@@ -327,7 +327,7 @@ public final class SubmissionValidator {
         if (isValidProjectTitle(title)) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.SUCCESS, "Project title is valid"));
         } else {
-            report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Project title must be less than " + Constant.MAXIMUM_SHORT_STRING_LENGTH + " and less than " + Constant.MINIMUM_SHORT_STRING_LENGTH + " characters"));
+            report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Project title must be less than " + Constant.MAXIMUM_SHORT_STRING_LENGTH + " and more than " + Constant.MINIMUM_SHORT_STRING_LENGTH + " characters"));
         }
 
         return report;
