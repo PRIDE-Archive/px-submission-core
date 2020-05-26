@@ -296,7 +296,7 @@ public class SubmissionFileParser {
      * @param headers    file mapping headers
      * @param entries    file mapping entry
      * @throws uk.ac.ebi.pride.data.exception.SubmissionFileException
-     *          exception wihle parsing the input file
+     *          exception while parsing the input file
      */
     private static void parseFileMapping(Submission submission, String[] headers, List<String[]> entries) throws SubmissionFileException {
         // create all the objects and mappings
