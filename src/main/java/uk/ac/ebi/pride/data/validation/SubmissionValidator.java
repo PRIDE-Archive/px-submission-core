@@ -531,14 +531,15 @@ public final class SubmissionValidator {
 
         if (species == null || species.isEmpty()) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Species cannot be empty"));
-        } else {
-            for (Param sp : species) {
-                CvParam spCvParam = (CvParam) sp;
-                if (!Constant.NEWT.equalsIgnoreCase(spCvParam.getCvLabel())) {
-                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Species must be defined using NEWT ontology: " + spCvParam.getAccession()));
-                }
-            }
         }
+//        else {
+//            for (Param sp : species) {
+//                CvParam spCvParam = (CvParam) sp;
+//                if (!Constant.NEWT.equalsIgnoreCase(spCvParam.getCvLabel())) {
+//                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Species must be defined using NEWT ontology: " + spCvParam.getAccession()));
+//                }
+//            }
+//        }
 
         if (!report.hasError() && !report.hasWarning()) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.SUCCESS, "Species are valid"));
