@@ -17,15 +17,10 @@ public class Constant {
      * This section is used for submission file input/output purpose
      */
     public static final String COMMENT_ENTRY = "COM";
-
     public static final String METADATA_HEADER = "MTD";
-
     public static final String FILE_MAPPING_HEADER = "FMH";
-
     public static final String FILE_MAPPING_ENTRY = "FME";
-
     public static final String SAMPLE_METADATA_HEADER = "SMH";
-
     public static final String SAMPLE_METADATA_ENTRY = "SME";
 
     public static final String SUBMITTER_NAME = "submitter_name";
@@ -152,6 +147,7 @@ public class Constant {
     public static final String DOID = "DOID";
 
     public static final String EFO = "EFO";
+    public static final String NCBITAXON = "NCBITAXON";
 
 
     public static final String NO_MOD_PRIDE_ACCESSION = "PRIDE:0000398";
