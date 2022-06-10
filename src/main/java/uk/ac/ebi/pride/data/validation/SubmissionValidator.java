@@ -5,8 +5,10 @@ import uk.ac.ebi.pride.data.model.*;
 import uk.ac.ebi.pride.data.util.Constant;
 import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
 import uk.ac.ebi.pride.archive.dataprovider.project.SubmissionType;
+import uk.ac.ebi.pride.data.util.ValidateAnnotationFiles;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -26,11 +28,10 @@ public final class SubmissionValidator {
     private SubmissionValidator() {
     }
 
-
     /**
      * Full validation, also checks the existence and access permissions of the data files
      */
-    public static ValidationReport validateSubmission(Submission submission) {
+    public static ValidationReport validateSubmission(Submission submission) throws IOException {
         ValidationReport report = validateSubmissionSyntax(submission);
         report.combine(validateDataFiles(submission.getDataFiles()));
         return report;
@@ -40,7 +41,7 @@ public final class SubmissionValidator {
      * Validate only submission file schema, this doesn't check the existence and access permissions of the
      * data files
      */
-    public static ValidationReport validateSubmissionSyntax(Submission submission) {
+    public static ValidationReport validateSubmissionSyntax(Submission submission) throws IOException {
         ValidationReport report = new ValidationReport();
         report.combine(validateProjectMetaData(submission.getProjectMetaData()))
                 .combine(validateFileMappings(submission))
@@ -51,7 +52,7 @@ public final class SubmissionValidator {
     /**
      * Validate project metadata
      */
-    public static ValidationReport validateProjectMetaData(ProjectMetaData projectMetaData) {
+    public static ValidationReport validateProjectMetaData(ProjectMetaData projectMetaData) throws IOException {
         ValidationReport report = new ValidationReport();
         if (projectMetaData == null) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Project metadata cannot be empty"));
@@ -287,14 +288,18 @@ public final class SubmissionValidator {
         return report;
     }
 
-    private static ValidationReport validateProjectTags(Set<String> projectTags) {
+    private static ValidationReport validateProjectTags(Set<String> projectTags) throws IOException {
         ValidationReport report = new ValidationReport();
 
         for (String projectTag : projectTags) {
-            if (noneEmptyString(projectTag)) {
-                report.addMessage(new ValidationMessage(ValidationMessage.Type.SUCCESS, "Project tag is valid: " + projectTag));
-            } else {
+            if (!noneEmptyString(projectTag)) {
                 report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Project tag cannot be empty"));
+            } else if(projectTag.contains(",")) {
+                report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Project tag cannot contain commas. Multiple tags should report in multiple entries"));
+            }else if(!ValidateAnnotationFiles.getValidProjectTags().contains(projectTag)) {
+                report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Project tag is not valid. " + projectTag + " does not match with permitted tags at: " + Constant.PROJECT_TAG_FILE + ". New tags are accepted by Pull Requests."));
+            }else {
+                report.addMessage(new ValidationMessage(ValidationMessage.Type.SUCCESS, "Project tag is valid: " + projectTag));
             }
         }
 
@@ -422,7 +427,7 @@ public final class SubmissionValidator {
     public static ValidationReport validateKeywords(String keywords) {
         ValidationReport report = new ValidationReport();
 
-        if (noneEmptyString(keywords)) {
+        if (noneEmptyString(keywords) && keywords.length()<500) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.SUCCESS, "Keywords are valid"));
         } else {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Keywords cannot be empty"));
@@ -526,14 +531,15 @@ public final class SubmissionValidator {
 
         if (species == null || species.isEmpty()) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Species cannot be empty"));
-        } else {
-            for (Param sp : species) {
-                CvParam spCvParam = (CvParam) sp;
-                if (!Constant.NEWT.equalsIgnoreCase(spCvParam.getCvLabel())) {
-                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Species must be defined using NEWT ontology: " + spCvParam.getAccession()));
-                }
-            }
         }
+//        else {
+//            for (Param sp : species) {
+//                CvParam spCvParam = (CvParam) sp;
+//                if (!Constant.NEWT.equalsIgnoreCase(spCvParam.getCvLabel())) {
+//                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Species must be defined using NEWT ontology: " + spCvParam.getAccession()));
+//                }
+//            }
+//        }
 
         if (!report.hasError() && !report.hasWarning()) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.SUCCESS, "Species are valid"));

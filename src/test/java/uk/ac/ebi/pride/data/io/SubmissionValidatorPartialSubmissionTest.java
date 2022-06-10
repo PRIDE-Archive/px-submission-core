@@ -41,14 +41,14 @@ public class SubmissionValidatorPartialSubmissionTest {
         assertEquals(false, report.hasError());
     }
 
-    @Test
-    public void speciesMustBeNEWT() throws Exception {
-        Submission submission = SubmissionFileParser.parse(inputFile);
-        Set<CvParam> species = submission.getProjectMetaData().getSpecies();
-        species.iterator().next().setCvLabel("TEST");
-        assertEquals(true, SubmissionValidator.validateSpecies(species).hasError());
-        assertEquals(false, SubmissionValidator.validateSpecies(species).hasSuccess());
-    }
+//    @Test
+//    public void speciesMustBeNEWT() throws Exception {
+//        Submission submission = SubmissionFileParser.parse(inputFile);
+//        Set<CvParam> species = submission.getProjectMetaData().getSpecies();
+//        species.iterator().next().setCvLabel("TEST");
+//        assertEquals(true, SubmissionValidator.validateSpecies(species).hasError());
+//        assertEquals(false, SubmissionValidator.validateSpecies(species).hasSuccess());
+//    }
 
     @Test
     public void tissuesMustBeBTO() throws Exception {
