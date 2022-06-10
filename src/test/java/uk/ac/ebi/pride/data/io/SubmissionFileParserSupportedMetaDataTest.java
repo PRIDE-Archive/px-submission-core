@@ -124,7 +124,7 @@ public class SubmissionFileParserSupportedMetaDataTest {
 
     @Test
     public void testSpeciesAreCorrect() throws Exception {
-        assertEquals(2, submission.getProjectMetaData().getSpecies().size());
+        assertEquals(3, submission.getProjectMetaData().getSpecies().size());
         Set<CvParam> species = submission.getProjectMetaData().getSpecies();
         boolean hasHuman = CollectionTestUtils.findCvParamAccession(species, "9606");
         assertTrue(hasHuman);

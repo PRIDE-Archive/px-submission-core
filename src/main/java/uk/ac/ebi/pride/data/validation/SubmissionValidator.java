@@ -535,7 +535,7 @@ public final class SubmissionValidator {
         else {
             for (Param sp : species) {
                 CvParam spCvParam = (CvParam) sp;
-                if (!Constant.NEWT.equalsIgnoreCase(spCvParam.getCvLabel()) || !Constant.EFO.equalsIgnoreCase(spCvParam.getCvLabel()) || !Constant.NCBITAXON.equalsIgnoreCase(spCvParam.getCvLabel())) {
+                if (!Constant.NEWT.equalsIgnoreCase(spCvParam.getCvLabel()) && !Constant.EFO.equalsIgnoreCase(spCvParam.getCvLabel()) && !Constant.NCBITAXON.equalsIgnoreCase(spCvParam.getCvLabel())) {
                     report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Species must be defined using NEWT, NCBITAXON or EFO ontologies: " + spCvParam.getAccession()));
                 }
             }

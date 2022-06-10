@@ -16,6 +16,7 @@ MTD	experiment_type	[PRIDE, PRIDE:1000448, MS1,]
 MTD	submission_type	complete
 MTD	species	[NEWT,9606,Human,]
 MTD	species	[NEWT,741158,Homo sp. Altai,]
+MTD	species	[NCBITAXON,NCBITaxon:2480175,Elicom virus 1,]
 MTD	tissue	[BTO,BTO:0000142,brain,]
 MTD	cell_type	[CL,CL:0000236,B cell,]
 MTD	disease	[DOID, DOID:1319, brain cancer,]
