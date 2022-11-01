@@ -56,6 +56,10 @@ public class DataFile implements Serializable {
      * Assigned PRIDE accession, optional, should only be assigned to result file
      */
     private String assayAccession;
+    /**
+     * File Size
+     */
+    private long fileSize;
 
     // mzTab document, just in case we need anything else from it after parsing the file
     private MzTabDocument mzTabDocument = null;
@@ -132,6 +136,25 @@ public class DataFile implements Serializable {
         this.url = url;
         this.fileFormat = fileFormat;
         this.fileType = fileFormat.getFileType();
+        addFileMappings(mappings);
+        this.assayAccession = assayAccession;
+
+        if (this.fileType != null && this.fileType.equals(ProjectFileType.RESULT)) {
+            this.sampleMetaData = new SampleMetaData();
+        }
+    }
+    public DataFile(int id,
+                    File file,
+                    URL url,
+                    ProjectFileType fileType,
+                    long fileSize,
+                    List<DataFile> mappings,
+                    String assayAccession) {
+        this.fileId = id;
+        this.file = file;
+        this.url = url;
+        this.fileType = fileType;
+        this.fileSize = fileSize;
         addFileMappings(mappings);
         this.assayAccession = assayAccession;
 
@@ -290,15 +313,19 @@ public class DataFile implements Serializable {
         return path;
     }
 
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
+
     public long getFileSize() {
-        long fileSizeInBytes = 0;
-
-        if (isFile()) {
-            fileSizeInBytes = file.length();
-        } else if (isUrl()) {
-            fileSizeInBytes = FileURLUtil.getFileSize(url);
+        long fileSizeInBytes = this.fileSize;
+        if(fileSizeInBytes == 0){ // needs to calculate then
+            if (isFile()) {
+                fileSizeInBytes = file.length();
+            } else if (isUrl()) {
+                fileSizeInBytes = FileURLUtil.getFileSize(url);
+            }
         }
-
         return fileSizeInBytes;
     }
 
@@ -319,7 +346,7 @@ public class DataFile implements Serializable {
         if (sampleMetaData != null ? !sampleMetaData.equals(dataFile.sampleMetaData) : dataFile.sampleMetaData != null)
             return false;
         if (url != null ? !url.equals(dataFile.url) : dataFile.url != null) return false;
-
+        if (fileSize != dataFile.fileSize) return false;
         return true;
     }
 
@@ -342,6 +369,7 @@ public class DataFile implements Serializable {
                 "fileId=" + fileId +
                 ", file=" + file +
                 ", url=" + url +
+                ", fileSize=" + fileSize +
                 ", fileType=" + fileType +
                 ", fileFormat=" + fileFormat +
                 ", fileMappings=" + fileMappings +
