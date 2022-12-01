@@ -792,9 +792,14 @@ public final class SubmissionValidator {
                     report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "# is not allowed in the file name '" + actualFile.getName() + "'"));
                 }
 
-                if (!dataFile.getFileName().matches("[^-_.A-Za-z0-9]")){
-                    report.addMessage(new ValidationMessage(ValidationMessage.Type.WARNING, "POSIX compatible charset is NOT used in file name '" + actualFile.getName() + "'"));
+                if (dataFile.getFileName().matches("[^-_.A-Za-z0-9]")){
+                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "POSIX compatible charset is NOT used in file name '" + actualFile.getName() + "'"));
                 }
+
+                if (!dataFile.getFileName().matches("^[A-Za-z0-9].*")){
+                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Filenames should start with alpha numeric characters '" + actualFile.getName() + "'"));
+                }
+
             } else if (!dataFile.isUrl()) {
                 // Accept URL
                 report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Data file is not a file: " + dataFile.getFileId()));
