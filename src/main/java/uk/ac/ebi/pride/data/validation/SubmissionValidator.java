@@ -793,7 +793,7 @@ public final class SubmissionValidator {
                 }
 
                 if (dataFile.getFileName().matches("[^-_.A-Za-z0-9]")){
-                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "POSIX compatible charset is NOT used in file name '" + actualFile.getName() + "'"));
+                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Filenames must contains only -_.A-Za-z0-9 '" + actualFile.getName() + "'"));
                 }
 
                 if (!dataFile.getFileName().matches("^[A-Za-z0-9].*")){
