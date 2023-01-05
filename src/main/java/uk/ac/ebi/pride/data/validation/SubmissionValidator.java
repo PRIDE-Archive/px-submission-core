@@ -792,7 +792,7 @@ public final class SubmissionValidator {
                     report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "# is not allowed in the file name '" + actualFile.getName() + "'"));
                 }
 
-                if (dataFile.getFileName().matches("[^-_.A-Za-z0-9]")){
+                if (dataFile.getFileName().matches(".*[^-_.A-Za-z0-9].*")){
                     report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Filenames must contains only -_.A-Za-z0-9 '" + actualFile.getName() + "'"));
                 }
 
