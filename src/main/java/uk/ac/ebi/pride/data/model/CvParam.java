@@ -56,11 +56,6 @@ public class CvParam extends Param {
 
     @Override
     public String toString() {
-        return "CvParam{" +
-                "cvLabel='" + cvLabel + '\'' +
-                ", accession='" + accession + '\'' +
-                ", name='" + name + '\'' +
-                ", value='" + value + '\'' +
-                '}';
+        return "[" + cvLabel + ", " + accession +  ", " + getName() + ", " + (getValue() == null ? "" : getValue()) + "]";
     }
 }

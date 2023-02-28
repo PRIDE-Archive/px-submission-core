@@ -10,8 +10,8 @@ import java.io.Serializable;
  * @version $Id$
  */
 public class Param implements Serializable{
-    protected String name;
-    protected String value;
+    private String name;
+    private String value;
 
     public Param(String name, String value) {
         this.name = name;
@@ -56,9 +56,6 @@ public class Param implements Serializable{
 
     @Override
     public String toString() {
-        return "Param{" +
-                "name='" + name + '\'' +
-                ", value='" + value + '\'' +
-                '}';
+        return "[, , " + name + "," + value + "]";
     }
 }
