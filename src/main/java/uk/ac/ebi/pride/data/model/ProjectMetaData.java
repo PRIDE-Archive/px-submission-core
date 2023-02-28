@@ -795,6 +795,29 @@ public class ProjectMetaData implements Serializable {
     public String toString() {
         return "ProjectMetaData{" +
                 "projectTitle='" + projectTitle + '\'' +
+                ", projectDescription='" + projectDescription + '\'' +
+                ", sampleProcessingProtocol='" + sampleProcessingProtocol + '\'' +
+                ", dataProcessingProtocol='" + dataProcessingProtocol + '\'' +
+                ", otherOmicsLink='" + otherOmicsLink + '\'' +
+                ", keywords='" + keywords + '\'' +
+                ", submitterContact=" + submitterContact +
+                ", labHeadContact=" + labHeadContact +
+                ", projectTags=" + projectTags +
+                ", submissionType=" + submissionType +
+                ", massSpecExperimentMethods=" + massSpecExperimentMethods +
+                ", reasonForPartialSubmission='" + reasonForPartialSubmission + '\'' +
+                ", species=" + species +
+                ", tissues=" + tissues +
+                ", cellTypes=" + cellTypes +
+                ", diseases=" + diseases +
+                ", instruments=" + instruments +
+                ", modifications=" + modifications +
+                ", quantifications=" + quantifications +
+                ", additional=" + additional +
+                ", pubmedIds=" + pubmedIds +
+                ", dois=" + dois +
+                ", resubmissionPxAccession='" + resubmissionPxAccession + '\'' +
+                ", reanalysisAccessions=" + reanalysisAccessions +
                 '}';
     }
 }

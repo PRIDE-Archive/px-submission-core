@@ -112,4 +112,15 @@ public class Contact implements Serializable {
         result = 31 * result + (password != null ? Arrays.hashCode(password) : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", affiliation='" + affiliation + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password=" + Arrays.toString(password) +
+                '}';
+    }
 }
