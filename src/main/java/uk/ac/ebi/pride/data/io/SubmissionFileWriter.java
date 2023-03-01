@@ -2,10 +2,14 @@ package uk.ac.ebi.pride.data.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.pride.data.exception.SubmissionFileException;
-import uk.ac.ebi.pride.data.model.*;
-import uk.ac.ebi.pride.data.util.Constant;
 import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
+import uk.ac.ebi.pride.data.exception.SubmissionFileException;
+import uk.ac.ebi.pride.data.model.Contact;
+import uk.ac.ebi.pride.data.model.DataFile;
+import uk.ac.ebi.pride.data.model.ProjectMetaData;
+import uk.ac.ebi.pride.data.model.SampleMetaData;
+import uk.ac.ebi.pride.data.model.Submission;
+import uk.ac.ebi.pride.data.util.Constant;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +57,10 @@ public final class SubmissionFileWriter {
             if (!submission.getProjectMetaData().isPartialSubmission()) {
                 writeSampleMetaData(writer, submission.getDataFiles());
             }
+            writer.println();
+
+            writeComments(writer, submission.getComments());
+
             writer.flush();
 
         } catch (IOException e) {
@@ -63,6 +71,18 @@ public final class SubmissionFileWriter {
             if (writer != null) {
                 writer.close();
             }
+        }
+    }
+
+    private static void writeComments(PrintWriter writer, List<String> comments) {
+        if (comments != null) {
+            comments.forEach( value -> {
+                        String cleanedValue = cleanString(value);
+                        if (cleanedValue.trim().length() != 0) {
+                            writer.println(castToString(Constant.TAB, Constant.COMMENT_ENTRY, cleanedValue));
+                        }
+                    }
+            );
         }
     }
 
@@ -209,29 +229,29 @@ public final class SubmissionFileWriter {
      */
     private static void writeSampleMetaDataEntry(PrintWriter writer, int fileId, SampleMetaData metaData) {
         String species = metaData.hasMetaData(SampleMetaData.Type.SPECIES) ?
-            castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.SPECIES).toArray()) :
-            "";
+                castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.SPECIES).toArray()) :
+                "";
         String tissues = metaData.hasMetaData(SampleMetaData.Type.TISSUE) ?
-            castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.TISSUE).toArray()) :
-            "";
+                castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.TISSUE).toArray()) :
+                "";
         String cellTypes = metaData.hasMetaData(SampleMetaData.Type.CELL_TYPE) ?
-            castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.CELL_TYPE).toArray()) :
-            "";
+                castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.CELL_TYPE).toArray()) :
+                "";
         String diseases = metaData.hasMetaData(SampleMetaData.Type.DISEASE) ?
-            castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.DISEASE).toArray()) :
-            "";
+                castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.DISEASE).toArray()) :
+                "";
         String modification = metaData.hasMetaData(SampleMetaData.Type.MODIFICATION) ?
-            castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.MODIFICATION).toArray()) :
-            "";
+                castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.MODIFICATION).toArray()) :
+                "";
         String instruments = metaData.hasMetaData(SampleMetaData.Type.INSTRUMENT) ?
-            castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.INSTRUMENT).toArray()) :
-            "";
+                castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.INSTRUMENT).toArray()) :
+                "";
         String quantifications = metaData.hasMetaData(SampleMetaData.Type.QUANTIFICATION_METHOD) ?
-             castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.QUANTIFICATION_METHOD).toArray()) :
-            "";
+                castToString(Constant.COMMA, metaData.getMetaData(SampleMetaData.Type.QUANTIFICATION_METHOD).toArray()) :
+                "";
         String experimentalFactor = metaData.hasMetaData(SampleMetaData.Type.EXPERIMENTAL_FACTOR) ?
-            metaData.getMetaData(SampleMetaData.Type.EXPERIMENTAL_FACTOR).iterator().next().getValue() :
-            "";
+                metaData.getMetaData(SampleMetaData.Type.EXPERIMENTAL_FACTOR).iterator().next().getValue() :
+                "";
         writer.println(castToString(Constant.TAB, Constant.SAMPLE_METADATA_ENTRY,
                 fileId, species,
                 tissues, cellTypes, diseases, modification,
@@ -300,7 +320,7 @@ public final class SubmissionFileWriter {
      *
      * @param writer print writer
      */
-    private static void writeFileMappingHeader(PrintWriter writer, boolean hasPrideAccession,  boolean hasURLs) {
+    private static void writeFileMappingHeader(PrintWriter writer, boolean hasPrideAccession, boolean hasURLs) {
         StringBuilder sb = new StringBuilder(castToString(Constant.TAB, Constant.FILE_MAPPING_HEADER, Constant.FILE_ID,
                 Constant.FILE_TYPE, Constant.FILE_PATH, Constant.FILE_MAPPING));
         if (hasPrideAccession) {
@@ -320,7 +340,7 @@ public final class SubmissionFileWriter {
      * @param writer   print writer
      * @param dataFile data file mapping entry
      */
-    private static void writeFileMapping(PrintWriter writer, DataFile dataFile, boolean hasPrideAccession,  boolean hasURLs) throws IOException {
+    private static void writeFileMapping(PrintWriter writer, DataFile dataFile, boolean hasPrideAccession, boolean hasURLs) throws IOException {
         // convert file type
         String type = dataFile.getFileType().name();
 

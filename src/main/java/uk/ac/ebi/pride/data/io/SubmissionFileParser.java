@@ -36,6 +36,13 @@ public class SubmissionFileParser {
      */
     private static final int MIN_SAMPLE_METADATA_ENTRIES = 4;
 
+    /**
+     * Minimum number of entries in comment metadata entry line
+     */
+    private static final int MIN_COMMENT_METADATA_ENTRIES = 2;
+
+
+
 
     /**
      * private constructor to avoid creating an new instance
@@ -82,6 +89,8 @@ public class SubmissionFileParser {
             String[] sampleMetadataHeaders = null;
             // store sample metadata
             List<String[]> sampleMetadata = new ArrayList<String[]>();
+
+            List<String> commentData = new ArrayList<>();
 
 
             while ((line = reader.readLine()) != null) {
@@ -139,6 +148,10 @@ public class SubmissionFileParser {
                             String msg = "The Sample Metadata section of the submission file must have four tab-separated parts: " + line;
                             throw new SubmissionFileException(msg);
                         }
+                    } else if(isCommentData){
+                        if(length >= MIN_COMMENT_METADATA_ENTRIES){
+                            commentData.add(parts[1]);
+                        }
                     }
                 }
             }
@@ -151,6 +164,8 @@ public class SubmissionFileParser {
 
             // parse sample metadata
             parseSampleMetadata(submission, sampleMetadataHeaders, sampleMetadata);
+
+            submission.setComments(commentData);
 
         } catch (FileNotFoundException e) {
             String msg = "Failed to find submission file: " + file.getAbsolutePath();
