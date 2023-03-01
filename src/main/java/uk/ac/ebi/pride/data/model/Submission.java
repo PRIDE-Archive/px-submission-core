@@ -26,9 +26,12 @@ public class Submission implements Serializable {
      */
     protected final List<DataFile> dataFiles;
 
+    private List<String> comments;
+
     public Submission() {
         this.projectMetaData = new ProjectMetaData();
         this.dataFiles = Collections.synchronizedList(new ArrayList<DataFile>());
+        this.comments = new ArrayList<>();
     }
 
     public Submission(ProjectMetaData projectMetaData,
@@ -115,6 +118,14 @@ public class Submission implements Serializable {
         }
 
         return cnt;
+    }
+
+    public synchronized List<String> getComments() {
+        return comments;
+    }
+
+    public synchronized void setComments(List<String> comments) {
+        this.comments = comments;
     }
 
     @Override
