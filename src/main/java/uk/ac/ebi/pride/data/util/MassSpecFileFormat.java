@@ -281,25 +281,25 @@ public enum MassSpecFileFormat {
             return MassSpecFileFormat.RAW;
         }
 
-        ZipFile zipFile = null;
-        try {
-            zipFile = new ZipFile(file);
-
-            Enumeration<? extends ZipEntry> entries = zipFile.entries();
-            if (entries.hasMoreElements()) {
-                ZipEntry entry = entries.nextElement();
-                String fileName = entry.getName();
-                String fileExtension = FileUtil.getFileExtension(fileName);
-                format = checkFormatByExtension(fileExtension);
-            }
-        } catch (ZipException ze) {
-            System.err.println("Unable to extract zip file to check file extension, perhaps has nested directories or too large in size.");
-            format = null;
-        } finally {
-            if (zipFile != null) {
-                zipFile.close();
-            }
-        }
+//        ZipFile zipFile = null;
+//        try {
+//            zipFile = new ZipFile(file);
+//
+//            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+//            if (entries.hasMoreElements()) {
+//                ZipEntry entry = entries.nextElement();
+//                String fileName = entry.getName();
+//                String fileExtension = FileUtil.getFileExtension(fileName);
+//                format = checkFormatByExtension(fileExtension);
+//            }
+//        } catch (ZipException ze) {
+//            System.err.println("Unable to extract zip file to check file extension, perhaps has nested directories or too large in size.");
+//            format = null;
+//        } finally {
+//            if (zipFile != null) {
+//                zipFile.close();
+//            }
+//        }
 
         return format;
     }
@@ -318,7 +318,7 @@ public enum MassSpecFileFormat {
         MassSpecFileFormat fileFormat = checkZippedFileExtension(file);
 
         if (fileFormat == null && file.exists() && !FileUtil.isFileEmpty(file)) {
-            fileFormat = checkZippedFileContent(file);
+            //fileFormat = checkZippedFileContent(file);
         }
 
         return fileFormat;
