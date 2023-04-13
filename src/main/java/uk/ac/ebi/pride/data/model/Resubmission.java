@@ -61,6 +61,33 @@ public class Resubmission extends Submission implements Serializable {
         return formattedDataFiles;
     }
 
+    /**
+     * Filter out the DataFiles by MassSpecFileFormat and exclude provided ResubmissionFileChangeState
+     * @param format
+     * @param resubmissionFileChangeState
+     * @return
+     */
+    public synchronized List<DataFile> getFilteredDataFilesByFormat(MassSpecFileFormat format, ResubmissionFileChangeState resubmissionFileChangeState) {
+        List<DataFile> formattedDataFiles = new ArrayList();
+        for(Map.Entry<DataFile, ResubmissionFileChangeState> entry : this.getResubmission().entrySet()) {
+            if(format.equals(entry.getKey().getFileFormat()) && !entry.getValue().equals(resubmissionFileChangeState)){
+                formattedDataFiles.add(entry.getKey());
+            }
+        }
+        return formattedDataFiles;
+    }
+
+    public synchronized List<DataFile> getDataFileByType(ProjectFileType fileType, ResubmissionFileChangeState resubmissionFileChangeState) {
+        List<DataFile> typedDataFiles = new ArrayList<>();
+
+        for(Map.Entry<DataFile, ResubmissionFileChangeState> entry : this.getResubmission().entrySet()) {
+            if(fileType.equals(entry.getKey().getFileType()) && !entry.getValue().equals(resubmissionFileChangeState)){
+                typedDataFiles.add(entry.getKey());
+            }
+        }
+        return typedDataFiles;
+    }
+
     public Map<DataFile, ResubmissionFileChangeState> getResubmission() {
         return resubmission;
     }
@@ -74,14 +101,14 @@ public class Resubmission extends Submission implements Serializable {
     }
 
     public synchronized void newResubmissionDataFile(DataFile dataFile) {
-        resubmission.put(dataFile, ResubmissionFileChangeState.ADDED);
+        resubmission.put(dataFile, ResubmissionFileChangeState.ADD);
     }
 
     public synchronized void modifyResubmissionDataFile(DataFile dataFile) {
-        resubmission.put(dataFile, ResubmissionFileChangeState.MODIFIED);
+        resubmission.put(dataFile, ResubmissionFileChangeState.MODIFY);
     }
 
     public synchronized void deleteResubmissionDataFile(DataFile dataFile) {
-        resubmission.put(dataFile, ResubmissionFileChangeState.DELETED);
+        resubmission.put(dataFile, ResubmissionFileChangeState.DELETE);
     }
 }
