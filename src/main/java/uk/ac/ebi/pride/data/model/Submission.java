@@ -24,7 +24,7 @@ public class Submission implements Serializable {
     /**
      * A list of dataFiles to be submitted
      */
-    private final List<DataFile> dataFiles;
+    protected final List<DataFile> dataFiles;
 
     public Submission() {
         this.projectMetaData = new ProjectMetaData();
