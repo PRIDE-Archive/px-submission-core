@@ -70,7 +70,7 @@ public class Resubmission extends Submission implements Serializable {
     public synchronized List<DataFile> getFilteredDataFilesByFormat(MassSpecFileFormat format, ResubmissionFileChangeState resubmissionFileChangeState) {
         List<DataFile> formattedDataFiles = new ArrayList();
         for(Map.Entry<DataFile, ResubmissionFileChangeState> entry : this.getResubmission().entrySet()) {
-            if(format.equals(entry.getKey().getFileFormat()) && !entry.getValue().equals(resubmissionFileChangeState)){
+            if(format.equals(entry.getKey().getFileFormatWithoutCheckingContent()) && !entry.getValue().equals(resubmissionFileChangeState)){
                 formattedDataFiles.add(entry.getKey());
             }
         }

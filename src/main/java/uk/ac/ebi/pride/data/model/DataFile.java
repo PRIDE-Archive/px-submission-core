@@ -1,9 +1,10 @@
 package uk.ac.ebi.pride.data.model;
 
+import org.apache.commons.io.FilenameUtils;
+import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
 import uk.ac.ebi.pride.data.mztab.model.MzTabDocument;
 import uk.ac.ebi.pride.data.util.FileURLUtil;
 import uk.ac.ebi.pride.data.util.MassSpecFileFormat;
-import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
 
 import java.io.File;
 import java.io.IOException;
@@ -143,6 +144,7 @@ public class DataFile implements Serializable {
             this.sampleMetaData = new SampleMetaData();
         }
     }
+
     public DataFile(int id,
                     File file,
                     URL url,
@@ -222,6 +224,28 @@ public class DataFile implements Serializable {
             } catch (IOException e) {
                 // do nothing here
             } catch (URISyntaxException e) {
+                // do nothing here
+            }
+        }
+        return fileFormat;
+    }
+
+    public MassSpecFileFormat getFileFormatWithoutCheckingContent() {
+        if (fileFormat == null && (file != null || url != null)) {
+            try {
+                if (isFile()) {
+                    String fileName = file.getName();
+                    String fileExtension = FilenameUtils.getExtension(fileName);
+                    if ("zip".equalsIgnoreCase(fileExtension)) {
+                        return MassSpecFileFormat.checkZippedFileExtension(file);
+                    } else if ("gz".equalsIgnoreCase(fileExtension)) {
+                        return MassSpecFileFormat.checkGzippedFileExtension(file);
+                    }
+                    fileFormat = MassSpecFileFormat.checkFormatByExtension(file.getName());
+                } else if (isUrl()) {
+                    fileFormat = MassSpecFileFormat.checkFormatByExtension(url.getFile());
+                }
+            } catch (IOException e) {
                 // do nothing here
             }
         }
@@ -319,7 +343,7 @@ public class DataFile implements Serializable {
 
     public long getFileSize() {
         long fileSizeInBytes = this.fileSize;
-        if(fileSizeInBytes == 0){ // needs to calculate then
+        if (fileSizeInBytes == 0) { // needs to calculate then
             if (isFile()) {
                 fileSizeInBytes = file.length();
             } else if (isUrl()) {

@@ -194,7 +194,7 @@ public enum MassSpecFileFormat {
      * @param ext extension of a given file or folder
      * @return MassSpecFileFormat  mass spec file format
      */
-    private static MassSpecFileFormat checkFormatByExtension(String ext) {
+    public static MassSpecFileFormat checkFormatByExtension(String ext) {
         for (MassSpecFileFormat value : values()) {
             if (value.getFileExtension().equalsIgnoreCase(ext) && value.isFileFormat()) {
                 return value;
@@ -274,7 +274,7 @@ public enum MassSpecFileFormat {
     }
 
 
-    private static MassSpecFileFormat checkZippedFileExtension(File file) throws IOException {
+    public static MassSpecFileFormat checkZippedFileExtension(File file) throws IOException {
         MassSpecFileFormat format = null;
 
         if (file.getName().trim().toLowerCase().endsWith("raw.zip")) {
@@ -301,6 +301,10 @@ public enum MassSpecFileFormat {
 //            }
 //        }
 
+        String fileName = file.getName();
+        fileName = fileName.substring(0, fileName.length() - 4);
+        String fileExtension = FileUtil.getFileExtension(fileName);
+        format = checkFormatByExtension(fileExtension);
         return format;
     }
 
@@ -393,10 +397,10 @@ public enum MassSpecFileFormat {
      * @return file format
      * @throws IOException
      */
-    private static MassSpecFileFormat checkGzippedFileExtension(File file) throws IOException {
+    public static MassSpecFileFormat checkGzippedFileExtension(File file) throws IOException {
         MassSpecFileFormat format;
 
-        if (file.getName().trim().toLowerCase().endsWith("raw.gzip")) {
+        if (file.getName().trim().toLowerCase().endsWith("raw.gz")) {
             return MassSpecFileFormat.RAW;
         }
 
