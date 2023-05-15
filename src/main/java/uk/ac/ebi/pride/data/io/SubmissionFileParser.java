@@ -323,7 +323,8 @@ public class SubmissionFileParser {
         Map<Integer, List<Integer>> idMap = new HashMap<Integer, List<Integer>>();
 
         // get the index of all the values
-        int idIndex = -1, typeIndex = -1, pathIndex = -1, mappingIndex = -1, prideAccIndex = -1, urlIndex = -1;
+        int idIndex = -1, typeIndex = -1, pathIndex = -1, prideAccIndex = -1, urlIndex = -1;
+        //int mappingIndex = -1;
         for (int i = 0; i < headers.length; i++) {
             String header = headers[i].trim();
             if (Constant.FILE_ID.equalsIgnoreCase(header)) {
@@ -335,10 +336,12 @@ public class SubmissionFileParser {
             } else if (Constant.FILE_PATH.equalsIgnoreCase(header)) {
                 // file path
                 pathIndex = i;
-            } else if (Constant.FILE_MAPPING.equalsIgnoreCase(header)) {
-                // file mapping
-                mappingIndex = i;
-            } else if (Constant.PRIDE_ACCESSION.equalsIgnoreCase(header)) {
+            }
+//            else if (Constant.FILE_MAPPING.equalsIgnoreCase(header)) {
+//                // file mapping
+//                mappingIndex = i;
+//            }
+            else if (Constant.PRIDE_ACCESSION.equalsIgnoreCase(header)) {
                 // pride accession
                 prideAccIndex = i;
             }  else if (Constant.URL.equalsIgnoreCase(header)) {
@@ -389,40 +392,40 @@ public class SubmissionFileParser {
             fileMap.put(id, dataFile);
 
             // mappings
-            if (entry.length > mappingIndex) {
-                String mappingStr = entry[mappingIndex].trim();
-                if (mappingStr.length() > 0) {
-                    String[] parts = mappingStr.split(Constant.COMMA);
-                    List<Integer> idList = new ArrayList<Integer>();
-                    idMap.put(id, idList);
-                    for (String part : parts) {
-                        if (isNonNegativeInteger(part)) {
-                            idList.add(new Integer(part.trim()));
-                        } else {
-                            throw new SubmissionFileException("Invalid file id, must be none negative integer: " + part);
-                        }
-                    }
-                }
-            }
+//            if (entry.length > mappingIndex) {
+//                String mappingStr = entry[mappingIndex].trim();
+//                if (mappingStr.length() > 0) {
+//                    String[] parts = mappingStr.split(Constant.COMMA);
+//                    List<Integer> idList = new ArrayList<Integer>();
+//                    idMap.put(id, idList);
+//                    for (String part : parts) {
+//                        if (isNonNegativeInteger(part)) {
+//                            idList.add(new Integer(part.trim()));
+//                        } else {
+//                            throw new SubmissionFileException("Invalid file id, must be none negative integer: " + part);
+//                        }
+//                    }
+//                }
+//            }
         }
 
 
         // populate all the file mappings
-        for (Integer id : idMap.keySet()) {
-            DataFile dataFile = fileMap.get(id);
-            List<Integer> idMappings = idMap.get(id);
-            for (Integer idMapping : idMappings) {
-                DataFile mappedDataFile = fileMap.get(idMapping);
-                if (mappedDataFile != null) {
-                    dataFile.addFileMapping(mappedDataFile);
-                } else {
-                    throw new SubmissionFileException("Invalid file id, it must related to valid data file: " + idMapping);
-                }
-            }
-        }
+//        for (Integer id : idMap.keySet()) {
+//            DataFile dataFile = fileMap.get(id);
+//            List<Integer> idMappings = idMap.get(id);
+//            for (Integer idMapping : idMappings) {
+//                DataFile mappedDataFile = fileMap.get(idMapping);
+//                if (mappedDataFile != null) {
+//                    dataFile.addFileMapping(mappedDataFile);
+//                } else {
+//                    throw new SubmissionFileException("Invalid file id, it must related to valid data file: " + idMapping);
+//                }
+//            }
+//        }
 
         // looking for cyclic referencing  issues
-        isCyclicReferencesExists(idMap);
+        //isCyclicReferencesExists(idMap);
 
         // add all the data files
         submission.addDataFiles(fileMap.values());

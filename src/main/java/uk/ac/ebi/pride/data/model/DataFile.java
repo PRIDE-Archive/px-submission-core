@@ -48,7 +48,7 @@ public class DataFile implements Serializable {
     /**
      * All related data files, optional
      */
-    private final List<DataFile> fileMappings = Collections.synchronizedList(new ArrayList<DataFile>());
+    //private final List<DataFile> fileMappings = Collections.synchronizedList(new ArrayList<DataFile>());
     /**
      * additional metadata, optional, should only be assigned to result file
      */
@@ -118,7 +118,7 @@ public class DataFile implements Serializable {
         this.file = file;
         this.url = url;
         this.fileType = fileType;
-        addFileMappings(mappings);
+        //addFileMappings(mappings);
         this.assayAccession = assayAccession;
 
         if (this.fileType != null && this.fileType.equals(ProjectFileType.RESULT)) {
@@ -137,7 +137,7 @@ public class DataFile implements Serializable {
         this.url = url;
         this.fileFormat = fileFormat;
         this.fileType = fileFormat.getFileType();
-        addFileMappings(mappings);
+        //addFileMappings(mappings);
         this.assayAccession = assayAccession;
 
         if (this.fileType != null && this.fileType.equals(ProjectFileType.RESULT)) {
@@ -157,7 +157,7 @@ public class DataFile implements Serializable {
         this.url = url;
         this.fileType = fileType;
         this.fileSize = fileSize;
-        addFileMappings(mappings);
+        //addFileMappings(mappings);
         this.assayAccession = assayAccession;
 
         if (this.fileType != null && this.fileType.equals(ProjectFileType.RESULT)) {
@@ -256,47 +256,47 @@ public class DataFile implements Serializable {
         this.fileFormat = fileFormat;
     }
 
-    public boolean hasMappings() {
-        return fileMappings.size() > 0;
-    }
+//    public boolean hasMappings() {
+//        return fileMappings.size() > 0;
+//    }
 
-    public boolean hasRawMappings() {
-        for (DataFile fileMapping : fileMappings) {
-            if (fileMapping.getFileType().equals(ProjectFileType.RAW)) {
-                return true;
-            }
-        }
+//    public boolean hasRawMappings() {
+//        for (DataFile fileMapping : fileMappings) {
+//            if (fileMapping.getFileType().equals(ProjectFileType.RAW)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
-        return false;
-    }
+//    public List<DataFile> getFileMappings() {
+//        return new ArrayList<DataFile>(fileMappings);
+//    }
 
-    public List<DataFile> getFileMappings() {
-        return new ArrayList<DataFile>(fileMappings);
-    }
+//    public boolean containsFileMapping(DataFile mapping) {
+//        return fileMappings.contains(mapping);
+//    }
 
-    public boolean containsFileMapping(DataFile mapping) {
-        return fileMappings.contains(mapping);
-    }
+//    public void removeAllFileMappings() {
+//        fileMappings.clear();
+//    }
 
-    public void removeAllFileMappings() {
-        fileMappings.clear();
-    }
+//    public void removeFileMapping(DataFile fileMapping) {
+//        if (fileMapping != null) {
+//            fileMappings.remove(fileMapping);
+//        }
+//    }
 
-    public void removeFileMapping(DataFile fileMapping) {
-        if (fileMapping != null) {
-            fileMappings.remove(fileMapping);
-        }
-    }
+//    public void addFileMappings(Collection<DataFile> mappings) {
+//        if (mappings != null) {
+//            fileMappings.addAll(mappings);
+//        }
+//    }
 
-    public void addFileMappings(Collection<DataFile> mappings) {
-        if (mappings != null) {
-            fileMappings.addAll(mappings);
-        }
-    }
-
-    public void addFileMapping(DataFile fileMapping) {
-        fileMappings.add(fileMapping);
-    }
+//    public void addFileMapping(DataFile fileMapping) {
+//        fileMappings.add(fileMapping);
+//    }
 
     public SampleMetaData getSampleMetaData() {
         return sampleMetaData;
@@ -365,7 +365,7 @@ public class DataFile implements Serializable {
             return false;
         if (file != null ? !file.equals(dataFile.file) : dataFile.file != null) return false;
         if (fileFormat != dataFile.fileFormat) return false;
-        if (!fileMappings.equals(dataFile.fileMappings)) return false;
+        //if (!fileMappings.equals(dataFile.fileMappings)) return false;
         if (fileType != dataFile.fileType) return false;
         if (sampleMetaData != null ? !sampleMetaData.equals(dataFile.sampleMetaData) : dataFile.sampleMetaData != null)
             return false;
@@ -381,7 +381,7 @@ public class DataFile implements Serializable {
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (fileType != null ? fileType.hashCode() : 0);
         result = 31 * result + (fileFormat != null ? fileFormat.hashCode() : 0);
-        result = 31 * result + fileMappings.hashCode();
+        //result = 31 * result + fileMappings.hashCode();
         result = 31 * result + (sampleMetaData != null ? sampleMetaData.hashCode() : 0);
         result = 31 * result + (assayAccession != null ? assayAccession.hashCode() : 0);
         return result;
@@ -396,7 +396,7 @@ public class DataFile implements Serializable {
                 ", fileSize=" + fileSize +
                 ", fileType=" + fileType +
                 ", fileFormat=" + fileFormat +
-                ", fileMappings=" + fileMappings +
+                //", fileMappings=" + fileMappings +
                 ", sampleMetaData=" + sampleMetaData +
                 ", assayAccession='" + assayAccession + '\'' +
                 '}';

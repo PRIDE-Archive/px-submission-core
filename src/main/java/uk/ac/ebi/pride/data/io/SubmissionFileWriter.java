@@ -358,13 +358,13 @@ public final class SubmissionFileWriter {
         }
 
         // convert file mappings
-        String mappings = "";
-        if (dataFile.hasMappings()) {
-            for (DataFile file : dataFile.getFileMappings()) {
-                mappings += file.getFileId() + Constant.COMMA;
-            }
-            mappings = mappings.substring(0, mappings.length() - 1);
-        }
+//        String mappings = "";
+//        if (dataFile.hasMappings()) {
+//            for (DataFile file : dataFile.getFileMappings()) {
+//                mappings += file.getFileId() + Constant.COMMA;
+//            }
+//            mappings = mappings.substring(0, mappings.length() - 1);
+//        }
 
         // pride accession
         String prideAccession = "";
@@ -373,7 +373,7 @@ public final class SubmissionFileWriter {
         }
 
         StringBuilder sb = new StringBuilder(castToString(Constant.TAB, Constant.FILE_MAPPING_ENTRY, dataFile.getFileId(),
-                type, path, mappings));
+                type, path));
         if (hasPrideAccession) {
             sb.append('\t');
             sb.append(prideAccession);

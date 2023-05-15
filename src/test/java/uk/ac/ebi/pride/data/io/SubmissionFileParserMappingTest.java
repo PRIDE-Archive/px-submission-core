@@ -49,13 +49,13 @@ public class SubmissionFileParserMappingTest {
         assertEquals(3, cnt);
     }
 
-    @Test
-    public void testFileMappings() throws Exception {
-        List<DataFile> dataFiles = submission.getDataFiles();
-        DataFile result = dataFiles.get(0);
-        assertEquals(3, result.getFileMappings().size());
-        assertEquals(9, result.getFileMappings().get(2).getFileId());
-    }
+//    @Test
+//    public void testFileMappings() throws Exception {
+//        List<DataFile> dataFiles = submission.getDataFiles();
+//        DataFile result = dataFiles.get(0);
+//        assertEquals(3, result.getFileMappings().size());
+//        assertEquals(9, result.getFileMappings().get(2).getFileId());
+//    }
 
     @Test
     public void testURL() throws Exception {

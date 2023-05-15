@@ -105,9 +105,9 @@ public final class SubmissionValidator {
                         (SubmissionType.PARTIAL.equals(submissionType) && ProjectFileType.SEARCH.equals(dataFile.getFileType()))) {
                     resultPresent = true;
                     searchPresent = true;
-                    if (dataFile.getFileMappings().size() == 0) {
-                        report.addMessage(new ValidationMessage(dataFile, ValidationMessage.Type.ERROR, "No file mapping detected for file: " + dataFile.getFileId()));
-                    }
+//                    if (dataFile.getFileMappings().size() == 0) {
+//                        report.addMessage(new ValidationMessage(dataFile, ValidationMessage.Type.ERROR, "No file mapping detected for file: " + dataFile.getFileId()));
+//                    }
                 } else if ((SubmissionType.PRIDE.equals(submissionType) && ProjectFileType.RESULT.equals(dataFile.getFileType()))) {
                     resultPresent = true;
                     searchPresent = true;
@@ -126,35 +126,36 @@ public final class SubmissionValidator {
                 if (!searchPresent) {
                     report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Search files not found"));
                 }
-            } else { // check for result/search files w/o mappings to raw files, and raw files that have not been mapped
-                int resultOrSearchCount = 0;
-                List<DataFile> resultOrSearchFiles = SubmissionType.COMPLETE.equals(submissionType) ?
-                    submission.getDataFileByType(ProjectFileType.RESULT) :
-                    submission.getDataFileByType(ProjectFileType.SEARCH);
-                Set<DataFile> foundMappedRawFiles = new HashSet<>();
-                Set<DataFile> allRawFiles = new HashSet<>(submission.getDataFileByType(ProjectFileType.RAW));
-                for (DataFile resultOrSearchFile : resultOrSearchFiles) {
-                    if (resultOrSearchFile.getFileMappings().isEmpty() || !resultOrSearchFile.hasRawMappings()) {
-                        resultOrSearchCount++;
-                    } else if (!resultOrSearchFile.getFileMappings().isEmpty() && resultOrSearchFile.hasRawMappings()) {
-                        List<DataFile> fileMappings = resultOrSearchFile.getFileMappings();
-                        for (DataFile dataFile : fileMappings) {
-                            if (ProjectFileType.RAW.equals(dataFile.getFileType())) {
-                                foundMappedRawFiles.add(dataFile);
-                            }
-                        }
-                    }
-                }
-                if (0<resultOrSearchCount) {
-                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR,
-                        ((SubmissionType.COMPLETE.equals(submissionType)) ? "Result"
-                            : "Search") + " file is not mapped to at least 1 'raw' file."));
-                } else if (!allRawFiles.equals(foundMappedRawFiles)) {
-                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "At least 1 raw file has not been mapped to a " +
-                        ((SubmissionType.COMPLETE.equals(submissionType)) ? "'result'"
-                            : "'search'") + " file"));
-                }
             }
+//            else { // check for result/search files w/o mappings to raw files, and raw files that have not been mapped
+//                int resultOrSearchCount = 0;
+//                List<DataFile> resultOrSearchFiles = SubmissionType.COMPLETE.equals(submissionType) ?
+//                    submission.getDataFileByType(ProjectFileType.RESULT) :
+//                    submission.getDataFileByType(ProjectFileType.SEARCH);
+//                Set<DataFile> foundMappedRawFiles = new HashSet<>();
+//                Set<DataFile> allRawFiles = new HashSet<>(submission.getDataFileByType(ProjectFileType.RAW));
+//                for (DataFile resultOrSearchFile : resultOrSearchFiles) {
+//                    if (resultOrSearchFile.getFileMappings().isEmpty() || !resultOrSearchFile.hasRawMappings()) {
+//                        resultOrSearchCount++;
+//                    } else if (!resultOrSearchFile.getFileMappings().isEmpty() && resultOrSearchFile.hasRawMappings()) {
+//                        List<DataFile> fileMappings = resultOrSearchFile.getFileMappings();
+//                        for (DataFile dataFile : fileMappings) {
+//                            if (ProjectFileType.RAW.equals(dataFile.getFileType())) {
+//                                foundMappedRawFiles.add(dataFile);
+//                            }
+//                        }
+//                    }
+//                }
+//                if (0<resultOrSearchCount) {
+//                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR,
+//                        ((SubmissionType.COMPLETE.equals(submissionType)) ? "Result"
+//                            : "Search") + " file is not mapped to at least 1 'raw' file."));
+//                } else if (!allRawFiles.equals(foundMappedRawFiles)) {
+//                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "At least 1 raw file has not been mapped to a " +
+//                        ((SubmissionType.COMPLETE.equals(submissionType)) ? "'result'"
+//                            : "'search'") + " file"));
+//                }
+//            }
         }
         // cyclic referencing is early detected while parsing the file instead of checking here, to minimize the performance hit
         if (!report.hasError() && !report.hasWarning()) {
