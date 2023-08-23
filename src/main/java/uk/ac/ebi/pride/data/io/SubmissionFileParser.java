@@ -252,7 +252,8 @@ public class SubmissionFileParser {
             } else if (Constant.EXPERIMENT_TYPE.equalsIgnoreCase(type)) {
                 // experiment type
                 projectMetaData.addMassSpecExperimentMethods(createCvParam(value));
-            } else if (Constant.SUBMISSION_TYPE.equalsIgnoreCase(type) || Constant.LEGACY_SUBMISSION_TYPE.equalsIgnoreCase(type)) {
+            }
+            else if (Constant.SUBMISSION_TYPE.equalsIgnoreCase(type) || Constant.LEGACY_SUBMISSION_TYPE.equalsIgnoreCase(type)) {
                 // submission type
                 if (SubmissionType.COMPLETE.toString().equalsIgnoreCase(value) || Constant.LEGACY_SUPPORTED_SUBMISSION.equalsIgnoreCase(value)) {
                     projectMetaData.setSubmissionType(SubmissionType.COMPLETE);
@@ -262,8 +263,11 @@ public class SubmissionFileParser {
                     projectMetaData.setSubmissionType(SubmissionType.RAW);
                 } else if (SubmissionType.PRIDE.toString().equalsIgnoreCase(value)) {
                     projectMetaData.setSubmissionType(SubmissionType.PRIDE);
+                } else if (SubmissionType.AFFINITY.toString().equalsIgnoreCase(value)) {
+                    projectMetaData.setSubmissionType(SubmissionType.PRIDE);
                 }
-            } else if (Constant.REASON_FOR_PARTIAL.equalsIgnoreCase(type) || Constant.LEGACY_REASON_FOR_PARTIAL.equalsIgnoreCase(type)) {
+            }
+            else if (Constant.REASON_FOR_PARTIAL.equalsIgnoreCase(type) || Constant.LEGACY_REASON_FOR_PARTIAL.equalsIgnoreCase(type)) {
                 // reason for partial submission
                 projectMetaData.setReasonForPartialSubmission(value);
             } else if (Constant.SPECIES.equalsIgnoreCase(type)) {
