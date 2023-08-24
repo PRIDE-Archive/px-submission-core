@@ -114,8 +114,12 @@ public final class SubmissionValidator {
                     rawFilePresent = true;
                 } else if (rawFilePresent || ProjectFileType.RAW.equals(dataFile.getFileType())) {
                     rawFilePresent = true;
+                } else if (SubmissionType.AFFINITY.equals(submissionType) && ProjectFileType.SEARCH.equals(dataFile.getFileType())) {
+                    searchPresent = true;
+                    resultPresent = true;
                 }
             }
+
             if (!rawFilePresent || !resultPresent || !searchPresent) {
                 if (!rawFilePresent) {
                     report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Raw files not found"));
