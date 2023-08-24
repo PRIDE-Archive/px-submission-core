@@ -264,7 +264,7 @@ public class SubmissionFileParser {
                 } else if (SubmissionType.PRIDE.toString().equalsIgnoreCase(value)) {
                     projectMetaData.setSubmissionType(SubmissionType.PRIDE);
                 } else if (SubmissionType.AFFINITY.toString().equalsIgnoreCase(value)) {
-                    projectMetaData.setSubmissionType(SubmissionType.PRIDE);
+                    projectMetaData.setSubmissionType(SubmissionType.AFFINITY);
                 }
             }
             else if (Constant.REASON_FOR_PARTIAL.equalsIgnoreCase(type) || Constant.LEGACY_REASON_FOR_PARTIAL.equalsIgnoreCase(type)) {
