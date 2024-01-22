@@ -7,7 +7,8 @@ import java.io.IOException;
 
 public enum AffinityFileFormat {
     ADAT("adat", true,ProjectFileType.RAW),
-    BCL("bml", true, ProjectFileType.RAW);
+    BCL("bml", true, ProjectFileType.RAW),
+    PARQUET("parquet", true, ProjectFileType.RAW);
 
     private String fileExtension;
     private boolean fileFormat;

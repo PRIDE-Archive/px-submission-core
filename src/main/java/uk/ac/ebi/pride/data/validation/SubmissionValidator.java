@@ -114,7 +114,7 @@ public final class SubmissionValidator {
                     rawFilePresent = true;
                 } else if (rawFilePresent || ProjectFileType.RAW.equals(dataFile.getFileType())) {
                     rawFilePresent = true;
-                } else if (SubmissionType.AFFINITY.equals(submissionType) && ProjectFileType.SEARCH.equals(dataFile.getFileType())) {
+                } else if (SubmissionType.AFFINITY.equals(submissionType)) {
                     searchPresent = true;
                     resultPresent = true;
                 }
