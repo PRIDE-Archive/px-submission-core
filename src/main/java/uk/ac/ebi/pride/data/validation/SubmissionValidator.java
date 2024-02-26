@@ -4,7 +4,7 @@ import com.google.common.base.CharMatcher;
 import uk.ac.ebi.pride.data.model.*;
 import uk.ac.ebi.pride.data.util.Constant;
 import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
-import uk.ac.ebi.pride.archive.dataprovider.project.SubmissionType;
+import uk.ac.ebi.pride.data.util.SubmissionType;
 import uk.ac.ebi.pride.data.util.ValidateAnnotationFiles;
 
 import java.io.File;

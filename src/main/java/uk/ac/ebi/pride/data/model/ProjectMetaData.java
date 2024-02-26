@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.model;
 
-
-import uk.ac.ebi.pride.archive.dataprovider.project.SubmissionType;
+import uk.ac.ebi.pride.data.util.SubmissionType;
 
 import java.io.Serializable;
 import java.util.Arrays;
