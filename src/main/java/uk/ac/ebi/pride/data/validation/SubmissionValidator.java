@@ -1,10 +1,10 @@
 package uk.ac.ebi.pride.data.validation;
 
 import com.google.common.base.CharMatcher;
+import uk.ac.ebi.pride.archive.dataprovider.utils.SubmissionTypeConstants;
 import uk.ac.ebi.pride.data.model.*;
 import uk.ac.ebi.pride.data.util.Constant;
 import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
-import uk.ac.ebi.pride.data.util.SubmissionType;
 import uk.ac.ebi.pride.data.util.ValidateAnnotationFiles;
 
 import java.io.File;
@@ -57,7 +57,7 @@ public final class SubmissionValidator {
         if (projectMetaData == null) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Project metadata cannot be empty"));
         } else {
-            SubmissionType submissionType = projectMetaData.getSubmissionType();
+            SubmissionTypeConstants submissionType = projectMetaData.getSubmissionType();
             report.combine(validateContact(projectMetaData.getSubmitterContact()))
                     .combine(validateContact(projectMetaData.getLabHeadContact()))
                     .combine(validateProjectTile(projectMetaData.getProjectTitle()))
@@ -93,28 +93,28 @@ public final class SubmissionValidator {
     public static ValidationReport validateFileMappings(Submission submission) {
         ValidationReport report = new ValidationReport();
         List<DataFile> dataFiles = submission.getDataFiles();
-        SubmissionType submissionType = submission.getProjectMetaData().getSubmissionType();
+        SubmissionTypeConstants submissionType = submission.getProjectMetaData().getSubmissionType();
         if (dataFiles == null) {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Data files cannot be empty"));
         } else {
-            boolean resultPresent = SubmissionType.RAW.equals(submissionType);
+            boolean resultPresent = SubmissionTypeConstants.RAW.equals(submissionType);
             boolean searchPresent = false;
             boolean rawFilePresent = false;
             for (DataFile dataFile : dataFiles) {
-                if ((SubmissionType.COMPLETE.equals(submissionType) && ProjectFileType.RESULT.equals(dataFile.getFileType())) ||
-                        (SubmissionType.PARTIAL.equals(submissionType) && ProjectFileType.SEARCH.equals(dataFile.getFileType()))) {
+                if ((SubmissionTypeConstants.COMPLETE.equals(submissionType) && ProjectFileType.RESULT.equals(dataFile.getFileType())) ||
+                        (SubmissionTypeConstants.PARTIAL.equals(submissionType) && ProjectFileType.SEARCH.equals(dataFile.getFileType()))) {
                     resultPresent = true;
                     searchPresent = true;
 //                    if (dataFile.getFileMappings().size() == 0) {
 //                        report.addMessage(new ValidationMessage(dataFile, ValidationMessage.Type.ERROR, "No file mapping detected for file: " + dataFile.getFileId()));
 //                    }
-                } else if ((SubmissionType.PRIDE.equals(submissionType) && ProjectFileType.RESULT.equals(dataFile.getFileType()))) {
+                } else if ((SubmissionTypeConstants.PRIDE.equals(submissionType) && ProjectFileType.RESULT.equals(dataFile.getFileType()))) {
                     resultPresent = true;
                     searchPresent = true;
                     rawFilePresent = true;
                 } else if (rawFilePresent || ProjectFileType.RAW.equals(dataFile.getFileType())) {
                     rawFilePresent = true;
-                } else if (SubmissionType.AFFINITY.equals(submissionType)) {
+                } else if (SubmissionTypeConstants.AFFINITY.equals(submissionType)) {
                     searchPresent = true;
                     resultPresent = true;
                 }
@@ -133,7 +133,7 @@ public final class SubmissionValidator {
             }
 //            else { // check for result/search files w/o mappings to raw files, and raw files that have not been mapped
 //                int resultOrSearchCount = 0;
-//                List<DataFile> resultOrSearchFiles = SubmissionType.COMPLETE.equals(submissionType) ?
+//                List<DataFile> resultOrSearchFiles = SubmissionTypeConstants.COMPLETE.equals(submissionType) ?
 //                    submission.getDataFileByType(ProjectFileType.RESULT) :
 //                    submission.getDataFileByType(ProjectFileType.SEARCH);
 //                Set<DataFile> foundMappedRawFiles = new HashSet<>();
@@ -152,11 +152,11 @@ public final class SubmissionValidator {
 //                }
 //                if (0<resultOrSearchCount) {
 //                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR,
-//                        ((SubmissionType.COMPLETE.equals(submissionType)) ? "Result"
+//                        ((SubmissionTypeConstants.COMPLETE.equals(submissionType)) ? "Result"
 //                            : "Search") + " file is not mapped to at least 1 'raw' file."));
 //                } else if (!allRawFiles.equals(foundMappedRawFiles)) {
 //                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "At least 1 raw file has not been mapped to a " +
-//                        ((SubmissionType.COMPLETE.equals(submissionType)) ? "'result'"
+//                        ((SubmissionTypeConstants.COMPLETE.equals(submissionType)) ? "'result'"
 //                            : "'search'") + " file"));
 //                }
 //            }
@@ -510,11 +510,11 @@ public final class SubmissionValidator {
     /**
      * Validate reason for partial submission
      */
-    public static ValidationReport validateReasonForPartialSubmission(String reason, SubmissionType submissionType) {
+    public static ValidationReport validateReasonForPartialSubmission(String reason, SubmissionTypeConstants submissionType) {
         ValidationReport report = new ValidationReport();
 
         if (reason != null) {
-            if (submissionType.equals(SubmissionType.PARTIAL)) {
+            if (submissionType.equals(SubmissionTypeConstants.PARTIAL)) {
                 if (isValidMediumString(reason)) {
                     report.addMessage(new ValidationMessage(ValidationMessage.Type.SUCCESS, "Reason for partial submission is valid"));
                 } else {

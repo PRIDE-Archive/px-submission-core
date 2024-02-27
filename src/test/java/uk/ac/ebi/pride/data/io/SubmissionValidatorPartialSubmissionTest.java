@@ -2,7 +2,7 @@ package uk.ac.ebi.pride.data.io;
 
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.pride.archive.dataprovider.project.SubmissionType;
+import uk.ac.ebi.pride.archive.dataprovider.utils.SubmissionTypeConstants;
 import uk.ac.ebi.pride.data.model.CvParam;
 import uk.ac.ebi.pride.data.model.Submission;
 import uk.ac.ebi.pride.data.validation.SubmissionValidator;
@@ -82,7 +82,7 @@ public class SubmissionValidatorPartialSubmissionTest {
         Submission submission = SubmissionFileParser.parse(inputFile);
         Set<CvParam> modifications = submission.getProjectMetaData().getModifications();
         modifications.iterator().next().setCvLabel("TEST");
-        SubmissionType submissionType = submission.getProjectMetaData().getSubmissionType();
+        SubmissionTypeConstants submissionType = submission.getProjectMetaData().getSubmissionType();
         assertEquals(true, SubmissionValidator.validateModifications(modifications).hasError());
         assertEquals(false, SubmissionValidator.validateModifications(modifications).hasSuccess());
     }
@@ -118,7 +118,7 @@ public class SubmissionValidatorPartialSubmissionTest {
         Submission submission = SubmissionFileParser.parse(inputFile);
         Set<CvParam> modifications = submission.getProjectMetaData().getModifications();
         modifications.clear();
-        SubmissionType submissionType = submission.getProjectMetaData().getSubmissionType();
+        SubmissionTypeConstants submissionType = submission.getProjectMetaData().getSubmissionType();
         assertEquals(true, SubmissionValidator.validateModifications(modifications).hasError());
         assertEquals(false, SubmissionValidator.validateModifications(modifications).hasSuccess());
     }

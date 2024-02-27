@@ -3,11 +3,11 @@ package uk.ac.ebi.pride.data.io;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
+import uk.ac.ebi.pride.archive.dataprovider.utils.SubmissionTypeConstants;
 import uk.ac.ebi.pride.data.exception.SubmissionFileException;
 import uk.ac.ebi.pride.data.model.*;
 import uk.ac.ebi.pride.data.util.Constant;
 import uk.ac.ebi.pride.data.util.ExperimentalFactorUtil;
-import uk.ac.ebi.pride.data.util.SubmissionType;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -255,16 +255,16 @@ public class SubmissionFileParser {
             }
             else if (Constant.SUBMISSION_TYPE.equalsIgnoreCase(type) || Constant.LEGACY_SUBMISSION_TYPE.equalsIgnoreCase(type)) {
                 // submission type
-                if (SubmissionType.COMPLETE.toString().equalsIgnoreCase(value) || Constant.LEGACY_SUPPORTED_SUBMISSION.equalsIgnoreCase(value)) {
-                    projectMetaData.setSubmissionType(SubmissionType.COMPLETE);
-                } else if (SubmissionType.PARTIAL.toString().equalsIgnoreCase(value) || Constant.LEGACY_UNSUPPORTED_SUBMISSION.equalsIgnoreCase(value)) {
-                    projectMetaData.setSubmissionType(SubmissionType.PARTIAL);
-                } else if (SubmissionType.RAW.toString().equalsIgnoreCase(value)) {
-                    projectMetaData.setSubmissionType(SubmissionType.RAW);
-                } else if (SubmissionType.PRIDE.toString().equalsIgnoreCase(value)) {
-                    projectMetaData.setSubmissionType(SubmissionType.PRIDE);
-                } else if (SubmissionType.AFFINITY.toString().equalsIgnoreCase(value)) {
-                    projectMetaData.setSubmissionType(SubmissionType.AFFINITY);
+                if (SubmissionTypeConstants.COMPLETE.toString().equalsIgnoreCase(value) || Constant.LEGACY_SUPPORTED_SUBMISSION.equalsIgnoreCase(value)) {
+                    projectMetaData.setSubmissionType(SubmissionTypeConstants.COMPLETE);
+                } else if (SubmissionTypeConstants.PARTIAL.toString().equalsIgnoreCase(value) || Constant.LEGACY_UNSUPPORTED_SUBMISSION.equalsIgnoreCase(value)) {
+                    projectMetaData.setSubmissionType(SubmissionTypeConstants.PARTIAL);
+                } else if (SubmissionTypeConstants.RAW.toString().equalsIgnoreCase(value)) {
+                    projectMetaData.setSubmissionType(SubmissionTypeConstants.RAW);
+                } else if (SubmissionTypeConstants.PRIDE.toString().equalsIgnoreCase(value)) {
+                    projectMetaData.setSubmissionType(SubmissionTypeConstants.PRIDE);
+                } else if (SubmissionTypeConstants.AFFINITY.toString().equalsIgnoreCase(value)) {
+                    projectMetaData.setSubmissionType(SubmissionTypeConstants.AFFINITY);
                 }
             }
             else if (Constant.REASON_FOR_PARTIAL.equalsIgnoreCase(type) || Constant.LEGACY_REASON_FOR_PARTIAL.equalsIgnoreCase(type)) {

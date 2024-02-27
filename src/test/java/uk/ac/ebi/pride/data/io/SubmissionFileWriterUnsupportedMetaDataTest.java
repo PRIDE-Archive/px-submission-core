@@ -4,10 +4,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import uk.ac.ebi.pride.archive.dataprovider.utils.SubmissionTypeConstants;
 import uk.ac.ebi.pride.data.model.CvParam;
 import uk.ac.ebi.pride.data.model.ProjectMetaData;
 import uk.ac.ebi.pride.data.model.Submission;
-import uk.ac.ebi.pride.archive.dataprovider.project.SubmissionType;
 
 import java.io.File;
 import java.net.URL;
@@ -59,7 +59,7 @@ public class SubmissionFileWriterUnsupportedMetaDataTest {
     public void supportedIsFalse() throws Exception {
         SubmissionFileWriter.write(submission, newSubmissionFile);
         Submission newSubmission = SubmissionFileParser.parse(newSubmissionFile);
-        assertEquals(SubmissionType.PARTIAL, newSubmission.getProjectMetaData().getSubmissionType());
+        assertEquals(SubmissionTypeConstants.PARTIAL, newSubmission.getProjectMetaData().getSubmissionType());
     }
 
 

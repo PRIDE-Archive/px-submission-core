@@ -1,6 +1,6 @@
 package uk.ac.ebi.pride.data.model;
 
-import uk.ac.ebi.pride.data.util.SubmissionType;
+import uk.ac.ebi.pride.archive.dataprovider.utils.SubmissionTypeConstants;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -62,7 +62,7 @@ public class ProjectMetaData implements Serializable {
     /**
      * submission type
      */
-    private SubmissionType submissionType;
+    private SubmissionTypeConstants submissionType;
 
     /**
      * a list of mass spec experiment methods used, required
@@ -156,7 +156,7 @@ public class ProjectMetaData implements Serializable {
                 new Contact(),
                 null,
                 null,
-                SubmissionType.COMPLETE,
+                SubmissionTypeConstants.COMPLETE,
                 null,
                 null,
                 null,
@@ -183,7 +183,7 @@ public class ProjectMetaData implements Serializable {
                            Contact labHeadContact,
                            Set<String> projectTags,
                            Set<CvParam> massSpecExperimentMethods,
-                           SubmissionType submissionType,
+                           SubmissionTypeConstants submissionType,
                            String reasonForPartialSubmission,
                            Set<CvParam> species,
                            Set<CvParam> tissues,
@@ -289,22 +289,22 @@ public class ProjectMetaData implements Serializable {
     }
 
     public boolean isCompleteSubmission() {
-        return SubmissionType.COMPLETE.equals(submissionType);
+        return SubmissionTypeConstants.COMPLETE.equals(submissionType);
     }
 
     public boolean isPrideSubmission() {
-        return SubmissionType.PRIDE.equals(submissionType);
+        return SubmissionTypeConstants.PRIDE.equals(submissionType);
     }
 
     public boolean isPartialSubmission() {
-        return SubmissionType.PARTIAL.equals(submissionType);
+        return SubmissionTypeConstants.PARTIAL.equals(submissionType);
     }
 
-    public SubmissionType getSubmissionType() {
+    public SubmissionTypeConstants getSubmissionType() {
         return submissionType;
     }
 
-    public void setSubmissionType(SubmissionType submissionType) {
+    public void setSubmissionType(SubmissionTypeConstants submissionType) {
         this.submissionType = submissionType;
     }
 

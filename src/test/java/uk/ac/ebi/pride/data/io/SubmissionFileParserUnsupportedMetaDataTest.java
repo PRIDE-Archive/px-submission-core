@@ -3,9 +3,9 @@ package uk.ac.ebi.pride.data.io;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import uk.ac.ebi.pride.archive.dataprovider.utils.SubmissionTypeConstants;
 import uk.ac.ebi.pride.data.model.CvParam;
 import uk.ac.ebi.pride.data.model.Submission;
-import uk.ac.ebi.pride.archive.dataprovider.project.SubmissionType;
 
 import java.io.File;
 import java.net.URL;
@@ -87,7 +87,7 @@ public class SubmissionFileParserUnsupportedMetaDataTest {
 
     @Test
     public void testSupportedIsFalse() throws Exception {
-        assertEquals(SubmissionType.PARTIAL, submission.getProjectMetaData().getSubmissionType());
+        assertEquals(SubmissionTypeConstants.PARTIAL, submission.getProjectMetaData().getSubmissionType());
     }
 
     @Test
