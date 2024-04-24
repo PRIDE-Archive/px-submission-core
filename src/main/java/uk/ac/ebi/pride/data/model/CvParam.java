@@ -10,6 +10,10 @@ public class CvParam extends Param {
     private String cvLabel;
     private String accession;
 
+    public CvParam() {
+        super();
+    }
+
     public CvParam(String cvLabel, String accession, String name, String value) {
         super(name, value);
         this.cvLabel = cvLabel;

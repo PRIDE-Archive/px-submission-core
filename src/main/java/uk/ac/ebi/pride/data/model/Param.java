@@ -13,6 +13,9 @@ public class Param implements Serializable{
     private String name;
     private String value;
 
+    public Param() {
+    }
+
     public Param(String name, String value) {
         this.name = name;
         this.value = value;
