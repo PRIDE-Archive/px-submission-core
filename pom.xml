@@ -4,21 +4,14 @@
     <groupId>uk.ac.ebi.pride</groupId>
     <artifactId>px-submission-core</artifactId>
     <name>px-submission-core</name>
-    <version>2.2.0-SNAPSHOT</version>
-    
-    <parent>
-        <groupId>uk.ac.ebi.pride.architectural</groupId>
-        <artifactId>pride-core</artifactId>
-        <version>1.0.1</version>
-    </parent>
+    <version>21-0.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
 
     <properties>
-        <!-- Logging capabilities -->
-        <uk.ac.ebi.pride.architectural-pride-logging.version>1.0.0</uk.ac.ebi.pride.architectural-pride-logging.version>
-        <!-- TDD -->
-        <uk.ac.ebi.pride.architectural-pride-tdd.version>1.0.3</uk.ac.ebi.pride.architectural-pride-tdd.version>
-        <!-- archive data provider api dependency -->
+        <java.version>21</java.version>
         <uk.ac.ebi.pride.archive-archive-data-provider-api.version>1.0.8-SNAPSHOT</uk.ac.ebi.pride.archive-archive-data-provider-api.version>
+        <lombok.version>1.18.34</lombok.version>
     </properties>
 
     <dependencies>
@@ -28,77 +21,41 @@
             <version>${uk.ac.ebi.pride.archive-archive-data-provider-api.version}</version>
         </dependency>
         <dependency>
-            <groupId>uk.ac.ebi.pride.architectural</groupId>
-            <artifactId>pride-logging</artifactId>
-            <type>pom</type>
-            <version>${uk.ac.ebi.pride.architectural-pride-logging.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.pride.architectural</groupId>
-            <artifactId>pride-tdd</artifactId>
-            <type>pom</type>
-            <version>${uk.ac.ebi.pride.architectural-pride-tdd.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- For portable file names -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>19.0</version>
-        </dependency>
-        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.14.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <version>${lombok.version}</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.10.19</version>
+        </dependency>
     </dependencies>
-
-    <!-- LICENSE - from parent POM -->
-    <!-- ORGANIZATION - from parent POM -->
-
-    <developers>
-        <developer>
-            <id>tobias</id>
-            <name>Tobias Ternent</name>
-            <organization>Proteomics Services Team, PANDA Group, EMBL-European Bioinformatics Institute</organization>
-            <organizationUrl>http://www.ebi.ac.uk/pride</organizationUrl>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>Europe/London</timezone>
-        </developer>
-        <developer>
-            <id>mbernal</id>
-            <name>Manuel Bernal-Llinares</name>
-            <organization>Proteomics Team, EMBL-European Bioinformatics Institute</organization>
-            <organizationUrl>http://www.ebi.ac.uk/pride</organizationUrl>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>Europe/London</timezone>
-        </developer>
-    </developers>
-
-    <contributors>
-        <contributor>
-            <name>Rui Wang</name>
-            <organization>Proteomics Services Team, PANDA Group, EMBL-European Bioinformatics Institute</organization>
-            <organizationUrl>http://www.ebi.ac.uk/pride</organizationUrl>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>Europe/London</timezone>
-        </contributor>
-        <contributor>
-            <name>Suresh Hewapathirana</name>
-            <organization>Proteomics Services Team, PANDA Group, EMBL-European Bioinformatics Institute</organization>
-            <organizationUrl>http://www.ebi.ac.uk/pride</organizationUrl>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>Europe/London</timezone>
-        </contributor>
-    </contributors>
 
     <build>
         <resources>
@@ -126,7 +83,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 

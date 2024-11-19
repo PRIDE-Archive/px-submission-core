@@ -1,6 +1,5 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import net.jcip.annotations.NotThreadSafe;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,7 +21,6 @@ import static org.hamcrest.core.Is.is;
  * All rights reserved.
  */
 @RunWith(Parameterized.class)
-@NotThreadSafe
 public class MetadataLineItemProcessingStrategiesParsingStackTest {
     private String lineStart;
     private String lineItemKey;
