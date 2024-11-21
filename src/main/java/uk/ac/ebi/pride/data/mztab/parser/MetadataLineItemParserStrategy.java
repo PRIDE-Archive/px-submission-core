@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.MetadataLineItemParserStrategyException;
 
 /**
@@ -18,9 +17,9 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.MetadataLineItemParserStrate
  * It captures the data into the given bean
  */
 
+@Slf4j
 public abstract class MetadataLineItemParserStrategy {
-    private static final Logger logger = LoggerFactory.getLogger(MetadataLineItemParserStrategy.class);
-
+    
     private static int getStrictIndex(String s) throws MetadataLineItemParserStrategyException {
         int index = -1;
         if (!s.isEmpty()) {
@@ -43,7 +42,7 @@ public abstract class MetadataLineItemParserStrategy {
             } else {
                 lineItemKey = lineItems[1].substring(0, lineItems[1].indexOf('['));
             }
-            logger.debug("Parsed line item key '" + lineItemKey + "'");
+            log.debug("Parsed line item key '" + lineItemKey + "'");
             bean.setLineItemKey(lineItemKey);
         } catch (IndexOutOfBoundsException e) {
             throw new MetadataLineItemParserStrategyException(e.getMessage());
@@ -61,7 +60,7 @@ public abstract class MetadataLineItemParserStrategy {
         } catch (IndexOutOfBoundsException e) {
             throw new MetadataLineItemParserStrategyException(e.getMessage());
         }
-        logger.debug("Reading line item index '" + integerString + "'");
+        log.debug("Reading line item index '" + integerString + "'");
         int index = getStrictIndex(integerString);
         // Check that it is possitive
         if (index < 0) {
@@ -78,7 +77,7 @@ public abstract class MetadataLineItemParserStrategy {
                 // Refine it
                 propertyKey = propertyKey.substring(0, propertyKey.indexOf('['));
             }
-            logger.debug("Parsed property key '" + propertyKey + "'");
+            log.debug("Parsed property key '" + propertyKey + "'");
             bean.setPropertyKey(propertyKey);
         } catch (IndexOutOfBoundsException e) {
             // There is no property key, should we keep it absent?
@@ -99,7 +98,7 @@ public abstract class MetadataLineItemParserStrategy {
             String afterFirstSquareBracket = lineItems[1].substring(lineItems[1].indexOf(']') + 1);
             if (afterFirstSquareBracket.indexOf('[') != -1) {
                 String indexStringToParse = afterFirstSquareBracket.substring(afterFirstSquareBracket.indexOf('[') + 1, afterFirstSquareBracket.indexOf(']'));
-                logger.debug("Processing property index '" + indexStringToParse + "'");
+                log.debug("Processing property index '" + indexStringToParse + "'");
                 int index = getStrictIndex(indexStringToParse);
                 if (index < 0) {
                     throw new MetadataLineItemParserStrategyException("INVALID NEGATIVE property entry index");
@@ -116,7 +115,7 @@ public abstract class MetadataLineItemParserStrategy {
     // Parse a not indexed line item
     public static boolean parseLine(MetaDataLineItemParsingHandler.LineItemBean bean, String line) throws MetadataLineItemParserStrategyException {
         String[] lineItems = line.split("\t");
-        logger.debug(">>> LineItemBean LINE PARSER: '" + line);
+        log.debug(">>> LineItemBean LINE PARSER: '" + line);
         try {
             if (lineItems.length == 3) {
                 return getLineItemKey(bean, lineItems)
@@ -164,7 +163,7 @@ public abstract class MetadataLineItemParserStrategy {
 
     public static boolean parseLine(MetaDataLineItemParsingHandler.IndexedLineItemWithIndexedPropertyDataEntry bean, String line) throws MetadataLineItemParserStrategyException {
         String[] lineItems = line.split("\t");
-        logger.debug(">>> >>> >>> PARSING indexed line item with indexed property <<< <<< <<<");
+        log.debug(">>> >>> >>> PARSING indexed line item with indexed property <<< <<< <<<");
         try {
             if (lineItems.length == 3) {
                 // Get the data

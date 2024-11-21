@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 
 /**
@@ -20,9 +19,9 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerExcept
  * A particular context strategy will arrange the processing strategies in a "chain of responsibility" manner.
  */
 
+@Slf4j
 public abstract class LineItemParsingHandler {
-    private static final Logger logger = LoggerFactory.getLogger(LineItemParsingHandler.class);
-
+    
     // Next handler
     private LineItemParsingHandler nextHandler;
 

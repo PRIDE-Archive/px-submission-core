@@ -1,5 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -24,8 +25,8 @@ import java.util.Collection;
  * Bulk testing of valid files for the full document quick parsing strategy
  */
 @RunWith(Parameterized.class)
+@Slf4j
 public class MzTabFullDocumentQuickParserValidBulkTest {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabFullDocumentQuickParserValidBulkTest.class);
 
     private String fileName = null;
 
@@ -44,7 +45,7 @@ public class MzTabFullDocumentQuickParserValidBulkTest {
         MzTabParser parser = new MzTabFullDocumentQuickParser(new File(getTestFilePath(fileName)));
         parser.parse();
         MzTabDocument doc = parser.getMzTabDocument();
-        logger.debug("mzTab title: " + doc.getMetaData().getTitle());
+        log.debug("mzTab title: " + doc.getMetaData().getTitle());
     }
 
     @Parameterized.Parameters

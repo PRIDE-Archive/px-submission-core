@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.MetaData;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 
@@ -14,9 +13,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerExcept
  * All rights reserved.
  */
 
+@Slf4j
 public abstract class MzTabTypeLineItemParsingHandler extends MetaDataLineItemParsingHandler {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabTypeLineItemParsingHandler.class);
-
     // Keyword
     protected static final String MZTAB_TYPE_KEYWORD = "mzTab-type";
 

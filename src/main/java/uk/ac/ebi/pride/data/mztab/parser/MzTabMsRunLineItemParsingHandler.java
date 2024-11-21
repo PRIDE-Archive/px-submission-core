@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.MsRun;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.MetadataLineItemParserStrategyException;
@@ -21,9 +20,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.MetadataLineItemParserStrate
  * (location, format, id_format...)
  */
 
+@Slf4j
 public abstract class MzTabMsRunLineItemParsingHandler extends MetaDataLineItemParsingHandler implements MetaDataLineItemParsingHandler.IndexedLineItemWithPropertyBean {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabMsRunLineItemParsingHandler.class);
-
     protected static final String MZTAB_MSRUN_ITEM_PREFIX = "ms_run";
     // Bean Defaults
     protected static final String DEFAULT_LINE_ITEM_KEY = "";
@@ -77,7 +75,7 @@ public abstract class MzTabMsRunLineItemParsingHandler extends MetaDataLineItemP
     }
 
     private void cleanBean() {
-        logger.debug("Cleaning Bean data");
+        log.debug("Cleaning Bean data");
         lineItemKey = DEFAULT_LINE_ITEM_KEY;
         index = DEFAULT_INDEX;
         propertyKey = DEFAULT_PROPERTY_KEY;
@@ -96,9 +94,9 @@ public abstract class MzTabMsRunLineItemParsingHandler extends MetaDataLineItemP
      */
     protected MsRun getMsRunFromContext(MzTabParser context, int msRunIndex) {
         MsRun msRun = context.getMetaDataSection().getMsRunEntry(msRunIndex);
-        logger.debug("Existing MsRun entry for index " + msRunIndex + " is " + msRun);
+        log.debug("Existing MsRun entry for index " + msRunIndex + " is " + msRun);
         if (msRun == null) {
-            logger.debug("MsRun entry for index " + msRunIndex + " not present, creating a new one");
+            log.debug("MsRun entry for index " + msRunIndex + " not present, creating a new one");
             msRun = new MsRun();
             context.getMetaDataSection().updateMsRun(msRun, msRunIndex);
         }
@@ -109,7 +107,7 @@ public abstract class MzTabMsRunLineItemParsingHandler extends MetaDataLineItemP
     protected boolean doParseLineItem(MzTabParser context, String line, long lineNumber, long offset) throws LineItemParsingHandlerException {
         // Clear the bean
         cleanBean();
-        logger.debug(">>> PARSING LINE ITEM: " + line);
+        log.debug(">>> PARSING LINE ITEM: " + line);
         try {
             if (MetadataLineItemParserStrategy.parseLine(this, line)) {
                 if (getLineItemKey().equals(MZTAB_MSRUN_ITEM_PREFIX)) {

@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.Instrument;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.MetadataLineItemParserStrategyException;
@@ -14,9 +13,9 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.MetadataLineItemParserStrate
  * © 2016 Manuel Bernal Llinares <mbdebian@gmail.com>
  * All rights reserved.
  */
+@Slf4j
 public abstract class MzTabInstrumentLineItemParsingHandler extends MetaDataLineItemParsingHandler implements MetaDataLineItemParsingHandler.IndexedLineItemWithIndexedPropertyDataEntry {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabInstrumentLineItemParsingHandler.class);
-
+    
     protected static final String MZTAB_INSTRUMENT_ITEM_KEY = "instrument";
     // TODO - Refactor out the bean part
     // Bean Defaults

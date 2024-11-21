@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.InvalidMzTabSectionException;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.ParserStateException;
@@ -16,9 +15,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.ParserStateException;
  * <p>
  * This class defines the behaviour of the parser when working on mzTab peptide data
  */
+@Slf4j
 public abstract class PeptideParserState extends ParserState {
-    private static final Logger logger = LoggerFactory.getLogger(PeptideParserState.class);
-
     private static final String STATE_ID_NAME = "Peptide_parser_state";
 
     @Override
@@ -43,7 +41,7 @@ public abstract class PeptideParserState extends ParserState {
                 // We process header, data entries or comments
                 try {
                     if (!getLineItemParsingHandler().parseLine(context, line, lineNumber, offset)) {
-                        logger.warn("IGNORED Line '" + lineNumber + "', offset '" + offset + "', content '" + line + "'");
+                        log.warn("IGNORED Line '" + lineNumber + "', offset '" + offset + "', content '" + line + "'");
                     }
                 } catch (LineItemParsingHandlerException e) {
                     throw new ParserStateException("Error parsing line '" + lineNumber + "' ---> " + e.getMessage());

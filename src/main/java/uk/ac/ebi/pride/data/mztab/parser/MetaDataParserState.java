@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.InvalidMzTabSectionException;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.ParserStateException;
@@ -20,9 +19,9 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.ParserStateException;
  * that need to be processed in a different way.
  *
  */
+@Slf4j
 public abstract class MetaDataParserState extends ParserState {
-    private static final Logger logger = LoggerFactory.getLogger(MetaDataParserState.class);
-
+    
     private static final String STATE_ID_NAME = "MetaData_parser_state";
 
     @Override
@@ -51,7 +50,7 @@ public abstract class MetaDataParserState extends ParserState {
                 // Get appropiate section item parser
                 try {
                     if (!getLineItemParsingHandler().parseLine(context, line, lineNumber, offset)) {
-                        logger.warn("IGNORED Line '" + lineNumber + "', offset '" + offset + "', content '" + line + "'");
+                        log.warn("IGNORED Line '" + lineNumber + "', offset '" + offset + "', content '" + line + "'");
                     }
                 } catch (LineItemParsingHandlerException e) {
                     throw new ParserStateException("Error parsing line '" + lineNumber + "' ---> " + e.getMessage());

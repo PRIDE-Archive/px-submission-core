@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,9 +18,9 @@ import java.io.FileNotFoundException;
  * @deprecated
  */
 
+@Slf4j
 public class MzTabFile {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabFile.class);
-
+    
     // File name / path
     private String fileName;
 

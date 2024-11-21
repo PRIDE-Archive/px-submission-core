@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.exceptions.InvalidCvParameterException;
 
 import java.util.HashMap;
@@ -16,9 +15,9 @@ import java.util.Set;
  * © 2016 Manuel Bernal Llinares <mbdebian@gmail.com>
  * All rights reserved.
  */
+@Slf4j
 public class Software {
-    private static final Logger logger = LoggerFactory.getLogger(Software.class);
-
+    
     public class SoftwareValue extends CvParameter {
         public SoftwareValue(String label, String accession, String name, String value) throws InvalidCvParameterException {
             super(label, accession, name, value);
@@ -56,12 +55,12 @@ public class Software {
     public boolean validate(MzTabDocument context) throws ValidationException {
         if (context.getMetaData().getMode() == MetaData.MzTabMode.COMPLETE) {
             if (getValue() == null) {
-                logger.error("Software entry DOES NOT VALIDATE because its value is missing");
+                log.error("Software entry DOES NOT VALIDATE because its value is missing");
                 return false;
             }
         }
         if ((getValue() != null) && (!getValue().validate())) {
-            logger.error("Software value DOES NOT VALIDATE");
+            log.error("Software value DOES NOT VALIDATE");
             return false;
         }
         return true;

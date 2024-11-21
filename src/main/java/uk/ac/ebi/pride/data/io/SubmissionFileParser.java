@@ -1,8 +1,6 @@
 package uk.ac.ebi.pride.data.io;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
 import uk.ac.ebi.pride.archive.dataprovider.utils.SubmissionTypeConstants;
 import uk.ac.ebi.pride.data.exception.SubmissionFileException;
@@ -24,8 +22,6 @@ import java.util.*;
 
 @Slf4j
 public class SubmissionFileParser {
-    private static final Logger logger = LoggerFactory.getLogger(SubmissionFileParser.class);
-
     /**
      * Minimum number of entries in metadata entry line
      */
@@ -114,7 +110,7 @@ public class SubmissionFileParser {
                     // check whether it is a valid file format
                     if (!isMetaData && !isFileMapping && !isSampleMetadata && !isCommentData) {
                         String msg = "Unrecognised submission file section: " + file.getAbsolutePath();
-                        logger.error(msg);
+                        log.error(msg);
                         throw new SubmissionFileException(msg);
                     }
 
@@ -172,18 +168,18 @@ public class SubmissionFileParser {
 
         } catch (FileNotFoundException e) {
             String msg = "Failed to find submission file: " + file.getAbsolutePath();
-            logger.error(msg, e);
+            log.error(msg, e);
             throw new SubmissionFileException(msg, e);
         } catch (IOException e) {
             String msg = "Failed to read from submission file: " + file.getAbsolutePath();
-            logger.error(msg, e);
+            log.error(msg, e);
             throw new SubmissionFileException(msg, e);
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    logger.error("Failed to close submission file reader", e);
+                    log.error("Failed to close submission file reader", e);
                 }
             }
         }
@@ -377,7 +373,7 @@ public class SubmissionFileParser {
                     if (urlIndex > -1 && urlIndex < entry.length && entry[urlIndex]!=null && !entry[urlIndex].trim().isEmpty()) {
                         url = new URL(entry[urlIndex].trim());
                     } } catch (MalformedURLException me) {
-                    logger.error("Malformed URL, continuing anyway: " + urlIndex);
+                    log.error("Malformed URL, continuing anyway: " + urlIndex);
                 }
             }
 

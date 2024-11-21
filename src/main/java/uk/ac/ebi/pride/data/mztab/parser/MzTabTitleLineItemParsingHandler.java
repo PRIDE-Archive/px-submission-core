@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 
 /**
@@ -19,9 +18,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerExcept
  * item parsers, that involved the creation of more complex objects, belonging to more massive entries in the file, e.g.
  * the protein section.
  */
+@Slf4j
 public abstract class MzTabTitleLineItemParsingHandler extends MetaDataLineItemParsingHandler {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabTitleLineItemParsingHandler.class);
-
     // Keyword
     protected static final String MZTAB_TITLE_KEYWORD = "title";
 

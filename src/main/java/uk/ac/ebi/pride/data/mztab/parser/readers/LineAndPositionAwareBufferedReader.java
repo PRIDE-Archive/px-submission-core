@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser.readers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.util.FileUtil;
 
 import java.io.*;
@@ -18,9 +17,9 @@ import java.io.*;
  * Reader that corresponds to the line currently read
  */
 
+@Slf4j
 public class LineAndPositionAwareBufferedReader {
-    private static final Logger logger = LoggerFactory.getLogger(LineAndPositionAwareBufferedReader.class);
-
+    
     // Offset
     private long offset = 0;
     // Reader
@@ -55,7 +54,7 @@ public class LineAndPositionAwareBufferedReader {
     }
 
     public static int howManyCrlfChars(String fileName) throws IOException {
-        logger.debug("Detecting line break type in the file '" + fileName + "'");
+        log.debug("Detecting line break type in the file '" + fileName + "'");
         BufferedInputStream in = new BufferedInputStream(FileUtil.getFileInputStream(new File(fileName)));
         return howManyCrlfChars(in);
     }
@@ -65,24 +64,24 @@ public class LineAndPositionAwareBufferedReader {
             int b = 0;
             while ((b = in.read()) != -1) {
                 char c = (char) b;
-                //logger.debug("Character: '" + String.valueOf(c) + "'");
+                //log.debug("Character: '" + String.valueOf(c) + "'");
                 if (c == '\r') {
                     b = in.read();
                     if (b != -1) {
                         c = (char) b;
                         if (c == '\n') {
-                            logger.debug("CRLF Found!");
+                            log.debug("CRLF Found!");
                             return 2;
                         }
                     }
-                    logger.debug("CR Found!");
+                    log.debug("CR Found!");
                     return 1;
                 } else if (c == '\n') {
-                    logger.debug("LF Found!");
+                    log.debug("LF Found!");
                     return 1;
                 }
             }
-            logger.error("Line break type could not be identified !!");
+            log.error("Line break type could not be identified !!");
         } finally {
             in.close();
         }
@@ -91,7 +90,7 @@ public class LineAndPositionAwareBufferedReader {
 
     public LineAndPositionAwareBufferedReader(String fileName) throws IOException {
         ncrlf = howManyCrlfChars(fileName);
-        logger.debug("Creating reader for file '" + fileName + "'");
+        log.debug("Creating reader for file '" + fileName + "'");
         //reader = new LineNumberReader(new FileReader(fileName));
         // TODO - To my future self: if, at any time in the future, you need to refactor the parser out of the
         // TODO - submission tool, keep in mind this coupling point, where we use FileUtil getFileInputStream method
@@ -101,7 +100,7 @@ public class LineAndPositionAwareBufferedReader {
 
     public LineAndPositionAwareBufferedReader(File file) throws IOException {
         ncrlf = howManyCrlfChars(FileUtil.getFileInputStream(file));
-        logger.debug("Creating reader for file '" + file.getName() + "'");
+        log.debug("Creating reader for file '" + file.getName() + "'");
         reader = new LineNumberReader(new InputStreamReader(FileUtil.getFileInputStream(file)));
     }
 
@@ -112,7 +111,7 @@ public class LineAndPositionAwareBufferedReader {
      */
     public PositionAwareLine readLine() throws IOException {
         String line = reader.readLine();
-        //logger.debug("Line read '" + line + "', position '" + offset + "', line number '" + reader.getLineNumber() + "'");
+        //log.debug("Line read '" + line + "', position '" + offset + "', line number '" + reader.getLineNumber() + "'");
         PositionAwareLine readLine = null;
         if (line != null) {
             readLine = new PositionAwareLine(reader.getLineNumber(), offset, line);

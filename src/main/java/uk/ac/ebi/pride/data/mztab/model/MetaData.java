@@ -1,7 +1,7 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +16,9 @@ import java.util.Set;
  * All rights reserved.
  */
 
+@Slf4j
 public class MetaData implements MzTabSection {
-    private static final Logger logger = LoggerFactory.getLogger(MetaData.class);
-
+    
     // mzTab modes
     public enum MzTabType {
         QUANTIFICATION("Quantification"),
@@ -215,7 +215,7 @@ public class MetaData implements MzTabSection {
 
     // MsRun Entries management
     public MsRun updateMsRun(MsRun msRun, int index) {
-        logger.debug("Adding ms-run with index " + index);
+        log.debug("Adding ms-run with index " + index);
         return msRuns.put(index, msRun);
     }
 
@@ -229,7 +229,7 @@ public class MetaData implements MzTabSection {
 
     // Sample Entries management
     public void updateSampleData(Sample sample, int index) {
-        logger.debug("Adding sample data entry, index " + index);
+        log.debug("Adding sample data entry, index " + index);
         samples.put(index, sample);
     }
 

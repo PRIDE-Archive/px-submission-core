@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.MzTabSectionValidator;
 import uk.ac.ebi.pride.data.mztab.model.OneTimeDefaultValidatorMzTabSectionValidator;
 
@@ -17,9 +16,9 @@ import java.io.File;
  *
  * This is a quick parser for mzTab files, it will get
  */
+@Slf4j
 public class MzTabFullDocumentQuickParser extends MzTabParser {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabFullDocumentQuickParser.class);
-
+    
     public MzTabFullDocumentQuickParser(String fileName) {
         super(fileName);
     }

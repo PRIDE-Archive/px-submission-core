@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.ProteinSearchEngineScore;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.MetadataLineItemParserStrategyException;
@@ -14,9 +13,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.MetadataLineItemParserStrate
  * © 2016 Manuel Bernal Llinares <mbdebian@gmail.com>
  * All rights reserved.
  */
+@Slf4j
 public abstract class MzTabProteinSearchEngineScoreLineItemParsingHandler extends MetaDataLineItemParsingHandler implements MetaDataLineItemParsingHandler.IndexedLineItemBean {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabProteinSearchEngineScoreLineItemParsingHandler.class);
-
     protected static final String MZTAB_PROTEIN_SEARCH_ENGINE_SCORE_KEY = "protein_search_engine_score";
     // Bean defaults
     protected static final String DEFAULT_LINE_ITEM_KEY = "";

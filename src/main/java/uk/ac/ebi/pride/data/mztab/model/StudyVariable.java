@@ -1,7 +1,7 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,9 +14,9 @@ import java.util.Set;
  * © 2016 Manuel Bernal Llinares <mbdebian@gmail.com>
  * All rights reserved.
  */
+@Slf4j
 public class StudyVariable {
-    private static final Logger logger = LoggerFactory.getLogger(StudyVariable.class);
-
+    
     // Bean
     private String description = null;
     // We reference assays and samples via their indexes because, at the time they are set by the parser, we may have
@@ -84,7 +84,7 @@ public class StudyVariable {
             // cross-reference and retrieve assay via the context
             Assay assay = context.getMetaData().getAssay(assayIndex);
             if (assay == null) {
-                logger.error("Assay with index '" + assayIndex + "' WAS NOT FOUND when solving references for study_variable entry");
+                log.error("Assay with index '" + assayIndex + "' WAS NOT FOUND when solving references for study_variable entry");
                 return false;
             }
             // Add the referenced Assay
@@ -95,7 +95,7 @@ public class StudyVariable {
             // cross-reference and retrieve sample via the context
             Sample sample = context.getMetaData().getSampleData(sampleIndex);
             if (sample == null) {
-                logger.error("Sample with index '" + sampleIndex + "' WAS NOT FOUND when solving references for study_variable entry");
+                log.error("Sample with index '" + sampleIndex + "' WAS NOT FOUND when solving references for study_variable entry");
                 return false;
             }
             // Add the referenced sample
@@ -106,17 +106,17 @@ public class StudyVariable {
 
     public boolean validate(MzTabDocument context) {
         if (!solveReferences(context)) {
-            logger.error("VALIDATION error for this study variable, as references COULD NOT be solved");
+            log.error("VALIDATION error for this study variable, as references COULD NOT be solved");
             return false;
         }
         if (context.getMetaData().getType() == MetaData.MzTabType.QUANTIFICATION) {
             if (getDescription() == null) {
-                logger.error("study_variable description IS MANDATORY in mzTab type QUANTIFICATION (both complete and summary modes), but it is missing");
+                log.error("study_variable description IS MANDATORY in mzTab type QUANTIFICATION (both complete and summary modes), but it is missing");
                 return false;
             }
             if (context.getMetaData().getMode() == MetaData.MzTabMode.COMPLETE) {
                 if (assayRefs.isEmpty()) {
-                    logger.error("AT LEAST one assay reference is REQUIRED for study_variable in mzTab mode COMPLETE, mzTab type QUANTIFICATION");
+                    log.error("AT LEAST one assay reference is REQUIRED for study_variable in mzTab mode COMPLETE, mzTab type QUANTIFICATION");
                     return false;
                 }
             }

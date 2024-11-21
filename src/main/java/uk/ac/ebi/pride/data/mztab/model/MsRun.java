@@ -1,7 +1,7 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
 
@@ -16,9 +16,9 @@ import java.net.URL;
  * This class models an ms-run entry in the metadata section of mzTab files
  */
 
+@Slf4j
 public class MsRun {
-    private static final Logger logger = LoggerFactory.getLogger(MsRun.class);
-
+    
     // Bean
     private MsRunFormat msRunFormat = null;
     private MsRunIdFormat msRunIdFormat = null;
@@ -90,28 +90,28 @@ public class MsRun {
         // Validation Criteria
         // location must always be reported
         if (!hasLocationBeenSeen()) {
-            logger.error("MISSING ms_run location information");
+            log.error("MISSING ms_run location information");
             return false;
         }
         // If ms-run format is reported, ms-run id_format is required
         if ((getMsRunFormat() != null) && (getMsRunIdFormat() == null)) {
-            logger.error("ms_run format specified, but MISSING ms-run ID_format");
+            log.error("ms_run format specified, but MISSING ms-run ID_format");
             return false;
         }
         if ((getMsRunFormat() != null) && (!getMsRunFormat().validate())) {
-            logger.error("ms_run format IS INVALID");
+            log.error("ms_run format IS INVALID");
             return false;
         }
         if ((getMsRunIdFormat() != null) && (!getMsRunIdFormat().validate())) {
-            logger.error("ms_run ID format IS INVALID");
+            log.error("ms_run ID format IS INVALID");
             return false;
         }
         if ((getHash() != null) && (getHashMethod() == null)) {
-            logger.error("ms_run hash is present BUT ms_run hash_method IS MISSING!");
+            log.error("ms_run hash is present BUT ms_run hash_method IS MISSING!");
             return false;
         }
         if ((getHashMethod() != null) && (!getHashMethod().validate())) {
-            logger.error("This ms_run DOES NOT VALIDATE because its hash_method IS INVALID");
+            log.error("This ms_run DOES NOT VALIDATE because its hash_method IS INVALID");
             return false;
         }
         return true;

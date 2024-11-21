@@ -1,7 +1,7 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +18,8 @@ import java.util.Set;
  * This class models a Sample in mzTab metadata section
  */
 
+@Slf4j
 public class Sample {
-    private static final Logger logger = LoggerFactory.getLogger(Sample.class);
-
     public static class DataEntry {
         private Species species;
         private Tissue tissue;
@@ -80,23 +79,23 @@ public class Sample {
             // No special requirements for a data entry to be valid, so we'll run a check on those attributes in the
             // data entry that have been set
             if ((getSpecies() != null) && (!getSpecies().validate())) {
-                logger.error("INVALID Species information for sample data entry");
+                log.error("INVALID Species information for sample data entry");
                 return false;
             }
             if ((getTissue() != null) && (!getTissue().validate())) {
-                logger.error("INVALID Tissue information for sample data entry");
+                log.error("INVALID Tissue information for sample data entry");
                 return false;
             }
             if ((getCellType() != null) && (!getCellType().validate())) {
-                logger.error("INVALID Cell Type information for sample data entry");
+                log.error("INVALID Cell Type information for sample data entry");
                 return false;
             }
             if ((getDisease() != null) && (!getDisease().validate())) {
-                logger.error("INVALID Disease information for sample data entry");
+                log.error("INVALID Disease information for sample data entry");
                 return false;
             }
             if ((getSampleCustomAttribute() != null) && (!getSampleCustomAttribute().validate())) {
-                logger.error("INVALID Sample custom attribute for sample data entry");
+                log.error("INVALID Sample custom attribute for sample data entry");
                 return false;
             }
             // It is valid!
@@ -139,7 +138,7 @@ public class Sample {
         for (int dataEntryIndex :
                 getDataEntryIndexes()) {
             if (!getDataEntry(dataEntryIndex).validate()) {
-                logger.error("Sample Data Entry with index '" + dataEntryIndex + "' FAILED VALIDATION CRITERIA");
+                log.error("Sample Data Entry with index '" + dataEntryIndex + "' FAILED VALIDATION CRITERIA");
                 return false;
             }
         }

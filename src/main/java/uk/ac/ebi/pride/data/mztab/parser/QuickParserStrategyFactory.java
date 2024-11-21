@@ -1,7 +1,7 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Project: px-submission-tool
@@ -16,9 +16,8 @@ import org.slf4j.LoggerFactory;
  * mzTab file for the px-submission tool
  */
 
+@Slf4j
 public class QuickParserStrategyFactory implements StrategyParserStateFactory {
-    private static final Logger logger = LoggerFactory.getLogger(QuickParserStrategyFactory.class);
-
     @Override
     public MetaDataParserState getMetaDataParserState() {
         return new QuickMetaDataParserState();

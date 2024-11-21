@@ -1,7 +1,7 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Project: px-submission-tool
@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
  * © 2016 Manuel Bernal Llinares <mbdebian@gmail.com>
  * All rights reserved.
  */
+@Slf4j
 public class Assay {
-    private static final Logger logger = LoggerFactory.getLogger(Assay.class);
-
+    
     // WARNING - Only part of the assay[1-n] attributes in the metadata section are modeled here
     // TODO - Complete this bean with all properies of assay
 
@@ -78,13 +78,13 @@ public class Assay {
     // Solve references
     public boolean solveReferences(MzTabDocument context) {
         if (!(hasMsRunRefBeenSet() || hasSampleRefBeenSet())) {
-            logger.error("No references has been set for samples or ms-runs for this assay entry");
+            log.error("No references has been set for samples or ms-runs for this assay entry");
             return false;
         }
         if (getMsRunRefIndex() != DEFAULT_INDEX_VALUE) {
             MsRun msRun = context.getMetaData().getMsRunEntry(getMsRunRefIndex());
             if (msRun == null) {
-                logger.error("Invalid ms-run reference index '" + getMsRunRefIndex() + "' when processing assay information");
+                log.error("Invalid ms-run reference index '" + getMsRunRefIndex() + "' when processing assay information");
                 return false;
             }
             setMsRunRef(msRun);
@@ -92,7 +92,7 @@ public class Assay {
         if (getSampleRefIndex() != DEFAULT_INDEX_VALUE) {
             Sample sample = context.getMetaData().getSampleData(getSampleRefIndex());
             if (sample == null) {
-                logger.error("Invalid sample reference index '" + getMsRunRefIndex() + "' when processing assay information");
+                log.error("Invalid sample reference index '" + getMsRunRefIndex() + "' when processing assay information");
                 return false;
             }
             setSampleRef(sample);
@@ -103,18 +103,18 @@ public class Assay {
     public boolean validate(MzTabDocument context) throws ValidationException {
         // Solve references
         if (!solveReferences(context)) {
-            logger.error("This Assay entry DOES NOT VALIDATE because of references mapping problems");
+            log.error("This Assay entry DOES NOT VALIDATE because of references mapping problems");
             return false;
         }
         // Quantification reagent is required for Complete mode
         if ((context.getMetaData().getMode() == MetaData.MzTabMode.COMPLETE)
                 && (context.getMetaData().getType() == MetaData.MzTabType.QUANTIFICATION)) {
             if (getQuantificationReagent() == null) {
-                logger.error("MISSING REQUIRED quantification_reagent information for this assay, in mzTab mode COMPLETE");
+                log.error("MISSING REQUIRED quantification_reagent information for this assay, in mzTab mode COMPLETE");
                 return false;
             }
             if (getMsRunRef() == null) {
-                logger.error("MISSING REQUIRED ms_run_ref information for this assay, in mzTab mode COMPLETE");
+                log.error("MISSING REQUIRED ms_run_ref information for this assay, in mzTab mode COMPLETE");
                 return false;
             }
         }
@@ -122,15 +122,15 @@ public class Assay {
         // algorithmically speaking, and in terms of responsibilities
         // WARNING - I'VE REMOVED THESE VALIDATIONS, as I can't assure there are no circular dependencies
         /*if ((getMsRunRef() != null) && (!getMsRunRef().validate())) {
-            logger.error("INVALID Assay because its referenced ms_run DOES NOT VALIDATE");
+            log.error("INVALID Assay because its referenced ms_run DOES NOT VALIDATE");
             return false;
         }
         if ((getSampleRef() != null) && (!getSampleRef().validate())) {
-            logger.error("INVALID Assay because its referenced sample is not valid");
+            log.error("INVALID Assay because its referenced sample is not valid");
             return false;
         }*/
         if ((getQuantificationReagent() != null) && (!getQuantificationReagent().validate())) {
-            logger.error("INVALID Assay because its quantification reagent IS NOT VALID");
+            log.error("INVALID Assay because its quantification reagent IS NOT VALID");
             return false;
         }
         return true;

@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.ParserStateException;
 
 /**
@@ -16,9 +15,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.ParserStateException;
  * depending on the particular section that is currently being processed
  *
  */
+@Slf4j
 public abstract class ParserState {
-    private static final Logger logger = LoggerFactory.getLogger(ParserState.class);
-
     // Chain of responsibility for parsing metadata items
     private LineItemParsingHandler lineItemParsingHandler = null;
 

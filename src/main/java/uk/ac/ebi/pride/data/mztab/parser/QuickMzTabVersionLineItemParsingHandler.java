@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 
 /**
@@ -14,9 +13,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerExcept
  *
  * Quick processing strategy for mzTab version
  */
+@Slf4j
 public class QuickMzTabVersionLineItemParsingHandler extends MzTabVersionLineItemParsingHandler {
-    private static final Logger logger = LoggerFactory.getLogger(QuickMzTabVersionLineItemParsingHandler.class);
-
     // Check for attribute duplication
     private void checkForDuplicatedVersion(MzTabParser context, String line, long lineNumber, long offset) throws LineItemParsingHandlerException {
         if (context.getMetaDataSection().getVersion() != null) {

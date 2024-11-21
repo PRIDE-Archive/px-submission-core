@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.io;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.archive.dataprovider.file.ProjectFileType;
 import uk.ac.ebi.pride.data.exception.SubmissionFileException;
 import uk.ac.ebi.pride.data.model.Contact;
@@ -23,9 +22,8 @@ import java.util.List;
  * @author Rui Wang
  * @version $Id$
  */
+@Slf4j
 public final class SubmissionFileWriter {
-
-    private static final Logger logger = LoggerFactory.getLogger(SubmissionFileWriter.class);
 
     private SubmissionFileWriter() {
     }
@@ -65,7 +63,7 @@ public final class SubmissionFileWriter {
 
         } catch (IOException e) {
             String msg = "Error while writing submission file: " + file.getAbsolutePath();
-            logger.error(msg, e);
+            log.error(msg, e);
             throw new SubmissionFileException(msg, e);
         } finally {
             if (writer != null) {

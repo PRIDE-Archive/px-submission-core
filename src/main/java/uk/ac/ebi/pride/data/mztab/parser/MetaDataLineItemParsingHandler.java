@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 
 /**
@@ -16,9 +15,9 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerExcept
  * mzTab document.
  */
 
+@Slf4j
 public abstract class MetaDataLineItemParsingHandler extends LineItemParsingHandler {
-    private static final Logger logger = LoggerFactory.getLogger(MetaDataLineItemParsingHandler.class);
-
+    
     protected interface LineItemBean {
         String getLineItemKey();
         void setLineItemKey(String lineItemKey);

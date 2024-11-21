@@ -1,7 +1,7 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,9 +17,8 @@ import java.util.Set;
  * This class manages Protein Section data in an mzTab document
  */
 
+@Slf4j
 public class ProteinData implements MzTabSection {
-    private static final Logger logger = LoggerFactory.getLogger(ProteinData.class);
-
     // NOTE - This implementation of mzTab parser embedded in the px-submission-tool IS NOT a complete parser, it only
     // deals with the mzTab data that is of interest for the submission process, that's why we don't need to hold any
     // more information other than the presence/absence of a column for quick and lightweight validation purposes

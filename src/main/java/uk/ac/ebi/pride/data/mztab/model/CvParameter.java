@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.exceptions.InvalidCvParameterException;
 
 /**
@@ -15,9 +14,9 @@ import uk.ac.ebi.pride.data.mztab.exceptions.InvalidCvParameterException;
  * This class models a CV Parameter
  */
 
+@Slf4j
 public abstract class CvParameter {
-    private static final Logger logger = LoggerFactory.getLogger(CvParameter.class);
-
+    
     // Default value
     public static final String DEFAULT_VALUE = "";
     // Bean
@@ -41,12 +40,12 @@ public abstract class CvParameter {
     }
 
     public String getLabel() {
-        logger.debug("Get label '" + label + "'");
+        log.debug("Get label '" + label + "'");
         return label;
     }
 
     public void setLabel(String label) throws InvalidCvParameterException {
-        logger.debug("Set label '" + label + "'");
+        log.debug("Set label '" + label + "'");
         this.label = label;
         // REVISIT validation
         if (!this.validate())
@@ -54,12 +53,12 @@ public abstract class CvParameter {
     }
 
     public String getAccession() {
-        logger.debug("Get accession '" + accession + "'");
+        log.debug("Get accession '" + accession + "'");
         return accession;
     }
 
     public void setAccession(String accession) throws InvalidCvParameterException {
-        logger.debug("Set accession '" + accession + "'");
+        log.debug("Set accession '" + accession + "'");
         this.accession = accession;
         // REVISIT validation
         if (!this.validate())
@@ -67,12 +66,12 @@ public abstract class CvParameter {
     }
 
     public String getName() {
-        logger.debug("Get name '" + name + "'");
+        log.debug("Get name '" + name + "'");
         return name;
     }
 
     public void setName(String name) throws InvalidCvParameterException {
-        logger.debug("Set name '" + name + "'");
+        log.debug("Set name '" + name + "'");
         this.name = name;
         // REVISIT validation
         if (!this.validate())
@@ -80,12 +79,12 @@ public abstract class CvParameter {
     }
 
     public String getValue() {
-        logger.debug("Get value '" + value + "'");
+        log.debug("Get value '" + value + "'");
         return value;
     }
 
     public void setValue(String value) throws InvalidCvParameterException {
-        logger.debug("Set value '" + value + "'");
+        log.debug("Set value '" + value + "'");
         this.value = value;
         // REVISIT validation
         if (!this.validate())

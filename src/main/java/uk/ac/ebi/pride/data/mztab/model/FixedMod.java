@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.exceptions.InvalidCvParameterException;
 
 /**
@@ -12,10 +11,10 @@ import uk.ac.ebi.pride.data.mztab.exceptions.InvalidCvParameterException;
  * © 2016 Manuel Bernal Llinares <mbdebian@gmail.com>
  * All rights reserved.
  */
+@Slf4j
 public class FixedMod {
-    private static final Logger logger = LoggerFactory.getLogger(FixedMod.class);
-
-    public class FixedModValue extends CvParameter {
+    
+public class FixedModValue extends CvParameter {
         public FixedModValue(String label, String accession, String name, String value) throws InvalidCvParameterException {
             super(label, accession, name, value);
         }
@@ -57,11 +56,11 @@ public class FixedMod {
     public boolean validate() throws ValidationException {
         // There must be a value
         if (getValue() == null) {
-            logger.error("MISSING value for fixed_mod item");
+            log.error("MISSING value for fixed_mod item");
             return false;
         }
         if (!getValue().validate()) {
-            logger.error("fixed_mod value IS INVALID!");
+            log.error("fixed_mod value IS INVALID!");
             return false;
         }
         return true;

@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 
 /**
@@ -14,9 +13,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerExcept
  *
  * Quick processing strategy for mzTab title
  */
+@Slf4j
 public class QuickMzTabTitleLineItemParsingHandler extends MzTabTitleLineItemParsingHandler {
-    private static final Logger logger = LoggerFactory.getLogger(QuickMzTabTitleLineItemParsingHandler.class);
-
     private void checkForDuplicatedTitle(MzTabParser context, long lineNumber) throws LineItemParsingHandlerException {
         if (context.getMetaDataSection().getTitle() != null) {
             throw new LineItemParsingHandlerException("DUPLICATED " + MZTAB_TITLE_KEYWORD + " found at line " + lineNumber);

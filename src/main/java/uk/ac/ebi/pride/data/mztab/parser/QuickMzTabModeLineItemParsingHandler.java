@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.MetaData;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerException;
 
@@ -16,9 +15,8 @@ import uk.ac.ebi.pride.data.mztab.parser.exceptions.LineItemParsingHandlerExcept
  * This strategy processes the mzTab-mode by incorporating it in its corresponding subproduct
  */
 
+@Slf4j
 public class QuickMzTabModeLineItemParsingHandler extends MzTabModeLineItemParsingHandler {
-    private static final Logger logger = LoggerFactory.getLogger(QuickMzTabModeLineItemParsingHandler.class);
-
     private void checkForModeDuplication(MzTabParser context, String line, long lineNumber, long offset) throws LineItemParsingHandlerException {
         if (context.getMetaDataSection().getMode() != null) {
             throw new LineItemParsingHandlerException("DUPLICATED '" + MZTAB_MODE_KEYWORD + "' entry found!, line number '" + lineNumber + "'");

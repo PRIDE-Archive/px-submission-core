@@ -1,7 +1,6 @@
 package uk.ac.ebi.pride.data.mztab.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.ebi.pride.data.mztab.model.*;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.MzTabParserException;
 import uk.ac.ebi.pride.data.mztab.parser.exceptions.ParserStateException;
@@ -22,9 +21,8 @@ import java.io.IOException;
  *
  * This particular implementation, already is a "file based" mzTab parser, for scope reasons
  */
+@Slf4j
 public abstract class MzTabParser {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabParser.class);
-
     // Final Product
     private MzTabDocument mzTabDocument = null;
 
@@ -56,7 +54,7 @@ public abstract class MzTabParser {
         // In the context of a parser starting from scratch, it makes sense that we create an new MzTabDocument if none
         // has been set up
         if (mzTabDocument == null) {
-            logger.debug("Creating a new mzTab document");
+            log.debug("Creating a new mzTab document");
             mzTabDocument = new MzTabDocument();
         }
         return mzTabDocument;
@@ -65,7 +63,7 @@ public abstract class MzTabParser {
     // Director of the parsing process
     public final void parse() throws MzTabParserException {
         if (getMzTabDocument().getMetaData() != null) {
-            logger.error("This document has already been parsed!");
+            log.error("This document has already been parsed!");
             return;
         } else {
             doInitParser();
@@ -75,7 +73,7 @@ public abstract class MzTabParser {
     }
 
     protected void changeState(ParserState newState) {
-        logger.debug("Changing state '" + parserState.getStateIdName()
+        log.debug("Changing state '" + parserState.getStateIdName()
                 + "' to new State '" + newState.getStateIdName() + "'");
         parserState = newState;
     }
@@ -115,7 +113,7 @@ public abstract class MzTabParser {
                             positionAwareLine.getLineNo(),
                             positionAwareLine.getOffset());
                 } catch (ParserStateException e) {
-                    logger.error("An error occurred while parsing a section of the mzTab file, '" + e.getMessage() + "'");
+                    log.error("An error occurred while parsing a section of the mzTab file, '" + e.getMessage() + "'");
                     throw new MzTabParserException(e.getMessage());
                 }
             } else {
@@ -129,7 +127,7 @@ public abstract class MzTabParser {
             if (!getMzTabDocument().validate(getMzTabSectionValidator())) {
                 throw new MzTabParserException("The parsed mzTab document DOES NOT VALIDATE");
             }
-            logger.info("parsed mzTab document has been successfully validated");
+            log.info("parsed mzTab document has been successfully validated");
         } catch (ValidationException e) {
             throw new MzTabParserException("An ERROR occurred while validating the parsed mzTab document: " + e.getMessage());
         }
@@ -163,7 +161,7 @@ public abstract class MzTabParser {
         if (metaData == null) {
             // In the context of a parser processing an mzTab document, it makes sense to create an empty meta data
             // section the first time the parser refers to it, if no previous meta data section was set
-            logger.debug("Creating new metadata section for the mzTab document");
+            log.debug("Creating new metadata section for the mzTab document");
             metaData = new MetaData();
             getMzTabDocument().setMetaData(metaData);
         }

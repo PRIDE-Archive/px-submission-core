@@ -1,7 +1,7 @@
 package uk.ac.ebi.pride.data.mztab.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Project: px-submission-tool
@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
  * © 2016 Manuel Bernal Llinares <mbdebian@gmail.com>
  * All rights reserved.
  */
+@Slf4j
 public class MzTabDocument implements ValidableProduct {
-    private static final Logger logger = LoggerFactory.getLogger(MzTabDocument.class);
-
+    
     // mzTab Sections
     private MetaData metaData = null;
     private ProteinData proteinData = null;
@@ -70,31 +70,31 @@ public class MzTabDocument implements ValidableProduct {
         // Call Validate on every subproduct
         // Validate Metadata section (required)
         if (getMetaData() == null) {
-            logger.error("MISSING REQUIRED Metadata section!!! Seriously! What are you doing!?!?");
+            log.error("MISSING REQUIRED Metadata section!!! Seriously! What are you doing!?!?");
             return false;
         }
         if (!getMetaData().validate(this, validator)) {
-            logger.error("Metadata section is NOT VALID, please, check logging messages");
+            log.error("Metadata section is NOT VALID, please, check logging messages");
             return false;
         }
         // Validate protein section
         if ((getProteinData() != null) && (!getProteinData().validate(this, validator))) {
-            logger.error("Protein section is NOT VALID, please, check logging messages");
+            log.error("Protein section is NOT VALID, please, check logging messages");
             return false;
         }
         // Validate Peptide section
         if ((getPeptideData() != null) && (!getPeptideData().validate(this, validator))) {
-            logger.error("Peptide section is NOT VALID, please, check logging messages");
+            log.error("Peptide section is NOT VALID, please, check logging messages");
             return false;
         }
         // Validate PSM section
         if ((getPsmData() != null) && (!getPsmData().validate(this, validator))) {
-            logger.error("PSM section is NOT VALID, please, check logging messages");
+            log.error("PSM section is NOT VALID, please, check logging messages");
             return false;
         }
         // Validate Small Molecules section
         if ((getSmallMoleculeData() != null) && (!getSmallMoleculeData().validate(this, validator))) {
-            logger.error("Small Molecule section is NOT VALID, please, check logging messages");
+            log.error("Small Molecule section is NOT VALID, please, check logging messages");
             return false;
         }
         // TODO - apply document wide validation criteria (like requirements depending on mzTab type and mode specified)
