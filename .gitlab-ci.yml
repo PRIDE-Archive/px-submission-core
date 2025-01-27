@@ -20,3 +20,6 @@ deploy:
     - mvn $MAVEN_CLI_OPTS deploy -DskipTests
   only:
     - master
+  except:
+    - schedules
+  when: manual
