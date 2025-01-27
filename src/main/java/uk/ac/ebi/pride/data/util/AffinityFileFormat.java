@@ -8,7 +8,10 @@ import java.io.IOException;
 public enum AffinityFileFormat {
     ADAT("adat", true,ProjectFileType.RAW),
     BCL("bml", true, ProjectFileType.RAW),
-    PARQUET("parquet", true, ProjectFileType.RAW);
+    PARQUET("parquet", true, ProjectFileType.RAW),
+
+    NPX("npx.csv", true, ProjectFileType.RESULT),
+    RAW("raw.csv", true, ProjectFileType.RESULT);
 
     private String fileExtension;
     private boolean fileFormat;
@@ -22,6 +25,15 @@ public enum AffinityFileFormat {
 
     public static AffinityFileFormat checkFormat(File file) throws IOException {
         AffinityFileFormat format = null;
+
+        if(file.getName().endsWith(NPX.getFileExtension())){
+                return NPX;
+            }
+
+        if (file.getName().endsWith(RAW.getFileExtension())){
+                return RAW;
+            }
+
         String ext = FileUtil.getFileExtension(file);
         if (ext != null) {
                 format = checkFormatByExtension(ext);

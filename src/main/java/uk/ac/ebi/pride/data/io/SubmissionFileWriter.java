@@ -52,7 +52,7 @@ public final class SubmissionFileWriter {
             writer.println();
 
             // write sample metadata
-            if (!submission.getProjectMetaData().isPartialSubmission()) {
+            if (submission.getProjectMetaData().isCompleteSubmission()) {
                 writeSampleMetaData(writer, submission.getDataFiles());
             }
             writer.println();

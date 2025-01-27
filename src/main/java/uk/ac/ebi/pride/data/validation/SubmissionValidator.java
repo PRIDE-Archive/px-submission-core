@@ -118,7 +118,7 @@ public final class SubmissionValidator {
                 }
             }
 
-            if (!rawFilePresent || !resultPresent || !searchPresent) {
+            if ((!rawFilePresent || !resultPresent || !searchPresent) && !SubmissionTypeConstants.AFFINITY.equals(submissionType) ) {
                 if (!rawFilePresent) {
                     report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Raw files not found"));
                 }
@@ -174,7 +174,7 @@ public final class SubmissionValidator {
         List<DataFile> dataFiles = submission.getDataFiles();
         for (DataFile dataFile : dataFiles) {
             SampleMetaData sampleMetaData = dataFile.getSampleMetaData();
-            if (ProjectFileType.RESULT.equals(dataFile.getFileType())) {
+            if (ProjectFileType.RESULT.equals(dataFile.getFileType()) && !submission.getProjectMetaData().getSubmissionType().equals(SubmissionTypeConstants.AFFINITY)) {
                 report.combine(validateSampleMetaDataEntry(dataFile, experimentalFactorOptional));
             } else if (sampleMetaData != null) {
                 report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "None result file should not contain sample metadata, file Id: " + dataFile.getFileId()));
@@ -211,7 +211,8 @@ public final class SubmissionValidator {
             } else {
                 report.combine(validateExperimentalFactor(sampleMetaDataEntry.getMetaData(SampleMetaData.Type.EXPERIMENTAL_FACTOR).iterator().next().getValue()));
             }
-        } else {
+        }
+        else {
             report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "Sample metadata entry must have a matching result file: " + dataFile.getFileId()));
         }
         if (!report.hasError() && !report.hasWarning()) {
