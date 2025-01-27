@@ -18,8 +18,8 @@ deploy:
   stage: deploy
   script:
     - mvn $MAVEN_CLI_OPTS deploy -DskipTests
-  only:
-    - master
-  except:
-    - schedules
-  when: manual
+  rules:
+    # Auto-deploy for the master branch
+    - if: '$CI_COMMIT_BRANCH == "master"'
+    # Manual deployment for other branches
+    - when: manual
