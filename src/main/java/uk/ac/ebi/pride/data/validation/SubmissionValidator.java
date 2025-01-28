@@ -174,10 +174,12 @@ public final class SubmissionValidator {
         List<DataFile> dataFiles = submission.getDataFiles();
         for (DataFile dataFile : dataFiles) {
             SampleMetaData sampleMetaData = dataFile.getSampleMetaData();
-            if (ProjectFileType.RESULT.equals(dataFile.getFileType()) && !submission.getProjectMetaData().getSubmissionType().equals(SubmissionTypeConstants.AFFINITY)) {
-                report.combine(validateSampleMetaDataEntry(dataFile, experimentalFactorOptional));
-            } else if (sampleMetaData != null) {
-                report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "None result file should not contain sample metadata, file Id: " + dataFile.getFileId()));
+            if(!submission.getProjectMetaData().getSubmissionType().equals(SubmissionTypeConstants.AFFINITY)) {
+                if (ProjectFileType.RESULT.equals(dataFile.getFileType())) {
+                    report.combine(validateSampleMetaDataEntry(dataFile, experimentalFactorOptional));
+                } else if (sampleMetaData != null) {
+                    report.addMessage(new ValidationMessage(ValidationMessage.Type.ERROR, "None result file should not contain sample metadata, file Id: " + dataFile.getFileId()));
+                }
             }
         }
         if (!report.hasError() && !report.hasWarning()) {
